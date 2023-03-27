@@ -66,7 +66,7 @@ public class Parser : TokenIterator
 
         var leftExp = ParseLineExpression(left);
         var rightExp = ParseLineExpression(right);
-
+        
         return new BinaryExpression(binaryThing,leftExp, rightExp);
     }
 
@@ -205,11 +205,13 @@ public class Parser : TokenIterator
     {
         switch (kind)
         {
+            case "^":
+                return 7;
+            
             case "/":
                 return 6;
             case "*":
                 return 5;
-
             case "+":
             case "-":
                 return 4;

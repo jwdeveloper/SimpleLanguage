@@ -16,7 +16,7 @@ public class BinaryExpression : ExpresionSyntax
     
     public override IEnumerable<SyntaxNode> getChildren()
     {
-      return   new List<SyntaxNode>(){left,token, righ};
+      return  new List<SyntaxNode>(){left,token, righ};
     }
 
 
@@ -29,16 +29,16 @@ public class BinaryExpression : ExpresionSyntax
     {
         var leftValue = left.execute();
         var rightValue = righ.execute();
-        if (!decimal.TryParse(leftValue, out var leftDecimal))
+        if (!double.TryParse(leftValue, out var leftDecimal))
         {
             throw new Exception("Unable to parse left value " + left.getValue());
         }
-        if (!decimal.TryParse(rightValue, out var rightDecimal))
+        if (!double.TryParse(rightValue, out var rightDecimal))
         {
             throw new Exception("Unable to parse right value " + left.getValue());
         }
 
-        decimal result = 0;
+        object result = 0;
         switch (token.Symbol)
         {
             case "+":
@@ -53,8 +53,31 @@ public class BinaryExpression : ExpresionSyntax
             case "/":
                 result = leftDecimal / rightDecimal;
                 break;
+            case "^":
+                result = Math.Pow(leftDecimal, rightDecimal);
+                break;
+            case "==":
+                result = leftDecimal == rightDecimal ? 1 : 0;
+                break;
+            case ">=":
+                result = leftDecimal >= rightDecimal ? 1 : 0;
+                break;
+            case "<=":
+                result = leftDecimal <= rightDecimal ? 1 : 0;
+                break;
+            case ">":
+                result = leftDecimal > rightDecimal ? 1 : 0;
+                break;
+            case "<":
+                result = leftDecimal < rightDecimal ? 1 : 0;
+                break;
+            case "and":
+                result = leftDecimal > 0 && rightDecimal > 0;
+                break;
+            case "or":
+                result = leftDecimal > 0 || rightDecimal > 0;
+                break;
         }
-
         return result.ToString();
     }
 }

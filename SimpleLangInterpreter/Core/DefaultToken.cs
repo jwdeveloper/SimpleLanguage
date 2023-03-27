@@ -24,6 +24,7 @@ public record DefaultToken
             MINUS,
             TIMES,
             DIVIDE,
+            POWER,
             QUOTE,
             DOT,
             SINGLE_AND,
@@ -120,6 +121,13 @@ public record DefaultToken
     {
         Name = "DIVIDE",
         Symbol = '/',
+        TokenType = TokenType.BinaryToken
+    };
+    
+    public static DefaultToken POWER = new()
+    {
+        Name = "POWER",
+        Symbol = '^',
         TokenType = TokenType.BinaryToken
     };
     
