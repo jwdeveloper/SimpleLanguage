@@ -7,7 +7,7 @@ public class DefaultKeywords
     
     
 
-    public static List<DefaultKeywords> GetDefaultTypes()
+    public static List<DefaultKeywords> GetDefaultKeywords()
     {
         return new List<DefaultKeywords>()
         {
@@ -18,7 +18,9 @@ public class DefaultKeywords
             VOID,
             CLASS,
             TRUE,
-            FALSE
+            FALSE,
+            RETURN,
+            ELSE
            
         };
     }
@@ -69,5 +71,17 @@ public class DefaultKeywords
     {
         Name = "FALSE",
         Value = "false"
+    };
+    
+    public static DefaultKeywords RETURN = new()
+    {
+        Name = "RETURN",
+        Value = "return"
+    };
+    
+    public static DefaultKeywords ELSE = new()
+    {
+        Name = "ELSE",
+        Value = "else"
     };
 }

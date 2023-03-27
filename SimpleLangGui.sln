@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLangGui", "SimpleLang
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleLangInterpreter", "SimpleLangInterpreter\SimpleLangInterpreter.csproj", "{FA2ED2F2-B310-4929-BB1F-F4FCD38159E6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F30497BF-ACDC-4DB0-BFDE-2EEF4D7DFFBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Unit", "Test.Unit\Test.Unit.csproj", "{D5589E43-8DB7-434E-9BF4-93DF26B1F084}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,12 @@ Global
 		{FA2ED2F2-B310-4929-BB1F-F4FCD38159E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA2ED2F2-B310-4929-BB1F-F4FCD38159E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA2ED2F2-B310-4929-BB1F-F4FCD38159E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5589E43-8DB7-434E-9BF4-93DF26B1F084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5589E43-8DB7-434E-9BF4-93DF26B1F084}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5589E43-8DB7-434E-9BF4-93DF26B1F084}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5589E43-8DB7-434E-9BF4-93DF26B1F084}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D5589E43-8DB7-434E-9BF4-93DF26B1F084} = {F30497BF-ACDC-4DB0-BFDE-2EEF4D7DFFBD}
 	EndGlobalSection
 EndGlobal

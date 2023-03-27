@@ -5,16 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleLangGui"
         mc:Ignorable="d"
-        Title="Simple Lang" Height="800" Width="1200">
+        Title="Simple Lang" Height="1000" Width="1900"  WindowStartupLocation="CenterScreen">
     <Grid ShowGridLines="True">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50*"></ColumnDefinition>
-            <ColumnDefinition Width="50*"></ColumnDefinition>
+            <ColumnDefinition Width="25*"></ColumnDefinition>
+            <ColumnDefinition Width="25*"></ColumnDefinition>
+            <ColumnDefinition Width="25*"></ColumnDefinition>
+            <ColumnDefinition Width="25*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <GridSplitter Grid.Column="1" Width="5" Grid.RowSpan ="3" 
                       VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext">
         </GridSplitter>
-        <RichTextBox x:Name="Input"  Grid.Column="0"  FontSize="30"/>
-        <RichTextBox x:Name="Output"  Grid.Column="1"  FontSize="30"/>
+        <RichTextBox x:Name="Input"  Grid.Column="0"  FontSize="25" Block.LineHeight="2"/>
+        <RichTextBox x:Name="Output_token"  Grid.Column="1"  FontSize="25"/>
+        <RichTextBox x:Name="Output_tree"  Grid.Column="2"  FontSize="25"/>
+        <RichTextBox x:Name="Output_program"  Grid.Column="3"  FontSize="25"/>
     </Grid>
 </Window>

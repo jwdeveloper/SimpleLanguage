@@ -1,8 +1,9 @@
 ﻿using SimpleLangInterpreter.Core;
+using SimpleLangInterpreter.Node;
 
 namespace SimpleLangInterpreter;
 
-public record SyntaxToken
+public record SyntaxToken : SyntaxNode
 {
     public string Name { get; set; }
     public string Symbol { get; set; }
@@ -13,11 +14,25 @@ public record SyntaxToken
 
     public override string ToString()
     {
-        return $"{Name} -> {Symbol}  \n";
+        return $"{Name}: {Symbol}  ({Position.Index}:{Position.Column}:{Position.Line})\n";
     }
 
-  
-    
+    public IEnumerable<SyntaxNode> getChildren()
+    {
+       return Enumerable.Empty<SyntaxNode>();
+    }
+
+    public NodeType getNoteType()
+    {
+        return NodeType.Undefined;
+    }
+
+    public string getValue()
+    {
+        return $" {Symbol}";
+    }
+
+
     public static SyntaxToken COMMA = new()
     {
         Name = "COMMA",

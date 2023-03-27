@@ -25,16 +25,15 @@ public record DefaultToken
             TIMES,
             DIVIDE,
             QUOTE,
-            DOT
+            DOT,
+            SINGLE_AND,
+            SINGLE_OR
         };
     }
     
     
     public static DefaultToken COMMA = new()
     {
-        
-       
-
         Name = "COMMA",
         Symbol = ',',
         TokenType = TokenType.Undefined
@@ -135,6 +134,20 @@ public record DefaultToken
     {
         Name = "DOT",
         Symbol = '.',
+        TokenType = TokenType.Undefined
+    };
+    
+    public static DefaultToken SINGLE_AND = new()
+    {
+        Name = "SINGLE_AND",
+        Symbol = '&',
+        TokenType = TokenType.Undefined
+    };
+    
+    public static DefaultToken SINGLE_OR = new()
+    {
+        Name = "SINGLE_OR",
+        Symbol = '|',
         TokenType = TokenType.Undefined
     };
 }

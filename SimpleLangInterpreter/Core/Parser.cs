@@ -1,9 +1,101 @@
 ﻿using SimpleLangInterpreter.Exceptions;
+using SimpleLangInterpreter.Node;
 
 namespace SimpleLangInterpreter.Core;
 
-public class Parser
+public class Parser : TokenIterator
 {
+
+    public Parser(List<SyntaxToken> tokens) : base(tokens)
+    {
+        
+    }
+    
+    public Program Parse()
+    {
+        Reset();
+        Advance();
+        var root = new Program();
+        var currentTokens = new List<SyntaxToken>();
+        while (IsValid())
+        {
+            if (Current().Symbol == ";")
+            {
+                var result = ParseLineExpression(currentTokens);
+                root.Nodes.Add(result);
+                Advance();
+                continue;
+            }
+            if (Current().Symbol == "(")
+            {
+                
+                break;
+            }
+            if (Current().Symbol == "{")
+            {
+                
+                break;
+            }
+
+            if (Current().TokenType == TokenType.WhiteSpace)
+            {
+                Advance();
+                continue;
+            }
+            
+            currentTokens.Add(Current());
+            Advance();
+        }
+        return root;
+    }
+
+
+    public ExpresionSyntax ParseLineExpression(List<SyntaxToken> tokens)
+    {
+
+        var bestBinary = FindBestBinaryTokens(tokens);
+        if (bestBinary.Key == -1)
+        {
+            return new NumberNode(tokens[0]);
+        }
+        var index = bestBinary.Key;
+        var binaryThing = bestBinary.Value;
+        
+        var left = tokens.GetRange(0, index);
+        var right = tokens.GetRange(index + 1, (tokens.Count - 1)-index );
+
+        var leftExp = ParseLineExpression(left);
+        var rightExp = ParseLineExpression(right);
+
+        return new BinaryExpression(binaryThing,leftExp, rightExp);
+    }
+
+    public KeyValuePair<int,SyntaxToken> FindBestBinaryTokens(List<SyntaxToken> tokens)
+    {
+        SyntaxToken token = null;
+        var biggerValue = int.MaxValue;
+        var index = -1;
+        for (var i = 0; i < tokens.Count; i++)
+        {
+            var current = tokens[i];
+            if (current.TokenType != TokenType.BinaryToken)
+            {
+                continue;
+            }
+
+
+            var number = GetBinaryTokenValue(current.Symbol);
+            if (number <= biggerValue)
+            {
+                biggerValue = number;
+                token = current;
+                index = i;
+            }
+        }
+        return new KeyValuePair<int, SyntaxToken>(index, token);
+    }
+    
+    
     public List<Operation> Interpet(List<SyntaxToken> tokens)
     {
         var operations = new List<Operation>();
@@ -53,12 +145,6 @@ public class Parser
         }
         return operations;
     }
-    
-    
-    
-    
-    
-    
     
     public List<SyntaxToken> CloneSymbols(List<SyntaxToken> symbols, int from, int to)
     {
@@ -112,5 +198,27 @@ public class Parser
             }
         }
         return -1;
+    }
+
+   
+    public static int GetBinaryTokenValue(string kind)
+    {
+        switch (kind)
+        {
+            case "/":
+                return 6;
+            case "*":
+                return 5;
+
+            case "+":
+            case "-":
+                return 4;
+            
+            case "==":
+                return 3;
+
+            default:
+                return 0;
+        }
     }
 }

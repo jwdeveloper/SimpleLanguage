@@ -10,9 +10,6 @@ public class Lexer
     private Position position;
     private char? _currentChar;
     private readonly List<DefaultToken> _defaultTokens;
-    private readonly List<DefaultOperations> _defaultOperations;
-    private readonly List<DefaultType> _defaultTypes;
-    private readonly List<DefaultKeywords> _defaultKeywords;
 
     public Lexer(string fileName, string input)
     {
@@ -20,9 +17,6 @@ public class Lexer
         _input = input.ToCharArray();
         position = new Position(-1, 0, -1, fileName, input);
         _defaultTokens = DefaultToken.GetDefaultTokens();
-        _defaultOperations = DefaultOperations.GetDefaultOperations();
-        _defaultTypes = DefaultType.GetDefaultTypes();
-        _defaultKeywords = DefaultKeywords.GetDefaultTypes();
     }
 
     private void Advance()
@@ -49,38 +43,38 @@ public class Lexer
         var tokens = new List<SyntaxToken>();
         Advance();
         var litteral = string.Empty;
+        var startLitteralPosition = position.copy();
         while (_currentChar != null)
         {
-            var token = LookDefaultTokens();
-            if (token == null)
-            {
-                litteral += _currentChar;
-            }
-            else
+            if(LookSingleChar(out SyntaxToken token))
             {
                 if (litteral != string.Empty)
                 {
-                    var literralTokens = ReadLitteral(litteral);
-                    tokens.AddRange(literralTokens);
+                    var literralTokens = ReadLitteral2(litteral,startLitteralPosition);
                     litteral = string.Empty;
+                    startLitteralPosition = position.copy();
+                    tokens.AddRange(literralTokens);
                 }
-
                 tokens.Add(token);
+            }
+            else
+            {
+                litteral += _currentChar;
             }
 
             Advance();
-
             if (_currentChar == null && litteral != string.Empty)
             {
-                tokens.AddRange(ReadLitteral(litteral));
+                tokens.AddRange(ReadLitteral2(litteral,position));
             }
         }
 
         return tokens;
     }
 
-    public SyntaxToken? LookDefaultTokens()
+    public bool LookSingleChar(out SyntaxToken token)
     {
+        token = null;
         foreach (var defaultToken in _defaultTokens)
         {
             if (defaultToken.Symbol != _currentChar)
@@ -90,63 +84,109 @@ public class Lexer
 
             if (defaultToken == DefaultToken.QUOTE)
             {
-                return ReadString();
+                token = ReadString();
+                return true;
             }
 
             if (_currentChar == DefaultToken.DIVIDE.Symbol && Lookahead == DefaultToken.DIVIDE.Symbol)
             {
-                return ReadComment();
+                token = ReadComment();
+                return true;
             }
 
             if (_currentChar == DefaultToken.DIVIDE.Symbol && Lookahead == '*')
             {
-                return ReadLongComment();
+                token = ReadLongComment();
+                return true;
             }
 
-            return new SyntaxToken()
+            token = new SyntaxToken()
             {
                 Name = defaultToken.Name,
                 Symbol = defaultToken.Symbol.ToString(),
                 TokenType = defaultToken.TokenType,
                 Position = position.copy(),
             };
+            return true;
         }
-        return null;
+        return false;
     }
 
-
-    public List<SyntaxToken> ReadLitteral(string currentText)
+    
+    public List<SyntaxToken> ReadLitteral2(string currentText, Position position)
     {
         var result = new List<SyntaxToken>();
-        currentText = currentText.Replace('\r', ' ').Replace('\n', ' ');
-        var values = currentText.Split(' ');
-        foreach (var value in values)
+        var chars = currentText.ToCharArray();
+        var world = string.Empty;
+        foreach (var value in chars)
         {
-            if (value == string.Empty || value == "\r\n")
+            if (char.IsWhiteSpace(value))
             {
-                continue;
+                if (world != string.Empty)
+                {
+                    if (isNumber(world))
+                    {
+                        result.Add(new SyntaxToken
+                        {
+                            Name = "NUMBER:INT",
+                            Symbol = world,
+                            TokenType = TokenType.NumberToken,
+                            Position = position
+                        });
+                    }
+                    else
+                    {
+                        result.Add(new SyntaxToken
+                        {
+                            Name = "LITTERAL",
+                            Symbol = world,
+                            TokenType = TokenType.LitteralToken,
+                            Position = position
+                        });  
+                    }
+                }
+                result.Add(new SyntaxToken
+                {
+                    Name = "WHITESPACE",
+                    Symbol = value.ToString(),
+                    TokenType = TokenType.WhiteSpace,
+                    Position = position
+                });
+                world = string.Empty;
             }
-
-            if (isNumber(value))
+            else
+            {
+                world += value;
+            }
+        }
+        if (world != string.Empty)
+        {
+            if (isNumber(world))
             {
                 result.Add(new SyntaxToken
                 {
                     Name = "NUMBER:INT",
-                    Symbol = value,
-                    TokenType = TokenType.NumberToken
+                    Symbol = world,
+                    TokenType = TokenType.NumberToken,
+                    Position = position
                 });
-                continue;
             }
-
-            result.Add(new SyntaxToken
+            else
             {
-                Name = "LITTERAL",
-                Symbol = value,
-                TokenType = TokenType.LitteralToken
-            });
+                result.Add(new SyntaxToken
+                {
+                    Name = "LITTERAL",
+                    Symbol = world,
+                    TokenType = TokenType.LitteralToken,
+                    Position = position
+                });  
+            }
         }
         return result;
     }
+    
+
+
 
     public bool isNumber(string input)
     {
@@ -174,6 +214,7 @@ public class Lexer
 
     private SyntaxToken ReadComment()
     {
+        var startPosition = position.copy();
         Advance();
         Advance();
         var comment = new StringBuilder();
@@ -185,17 +226,18 @@ public class Lexer
         return new SyntaxToken
         {
             Name = "Comment",
-            Symbol = comment.ToString(),
-            Position = position.copy(),
+            Symbol = "//"+comment.ToString(),
+            Position = startPosition,
             TokenType = TokenType.Comment
         };
     }
 
     private SyntaxToken ReadLongComment()
     {
-        Advance();
-        Advance();
+        var startPosition = position.copy();
         var comment = new StringBuilder();
+        Advance();
+        Advance();
         while (_currentChar != null)
         {
             if (_currentChar == '*' && Lookahead == DefaultToken.DIVIDE.Symbol)
@@ -211,8 +253,8 @@ public class Lexer
         return new SyntaxToken
         {
             Name = "Comment",
-            Symbol = comment.ToString(),
-            Position = position.copy(),
+            Symbol = "/*"+comment.ToString()+"*/",
+            Position = startPosition,
             TokenType = TokenType.Comment
         };
     }
@@ -223,7 +265,7 @@ public class Lexer
         Advance();
         var sb = new StringBuilder();
         var done = false;
-
+        var startPosition = position.copy();
         while (!done)
         {
             switch (_currentChar)
@@ -254,7 +296,7 @@ public class Lexer
         {
             Name = "STRING",
             Symbol = sb.ToString(),
-            Position = position.copy(),
+            Position = startPosition,
             TokenType = TokenType.StringToken
         };
     }

@@ -9,30 +9,29 @@ public class DefaultType
     {
         return new List<DefaultType>()
         {
-            Number(),
+            
             WhatEver(),
-            Text()
+            Text(),
+            Bool(),
+            Number(),
+            Int(),
+            Float(),
+            Byte(),
+            String()
         };
     }
 
-    public static DefaultType Number()
-    {
-        return new DefaultType()
-        {
-            Name = "Number",
-            Value = "number"
-        };
-    }
+ 
 
     public static DefaultType WhatEver()
     {
         return new DefaultType()
         {
-            Name = "WhatEver",
+            Name = "Whatever",
             Value = "var"
         };
     }
-    
+
     public static DefaultType Text()
     {
         return new DefaultType()
@@ -42,4 +41,56 @@ public class DefaultType
         };
     }
     
+    public static DefaultType Number()
+    {
+        return new DefaultType()
+        {
+            Name = "Number",
+            Value = "number"
+        };
+    }
+    
+    public static DefaultType Int()
+    {
+        return new DefaultType()
+        {
+            Name = "Int",
+            Value = "int"
+        };
+    }
+    
+    public static DefaultType Float()
+    {
+        return new DefaultType()
+        {
+            Name = "Float",
+            Value = "float"
+        };
+    }
+    
+    public static DefaultType Bool()
+    {
+        return new DefaultType()
+        {
+            Name = "Bool",
+            Value = "bool"
+        };
+    }
+    
+    public static DefaultType Byte()
+    {
+        return new DefaultType()
+        {
+            Name = "Byte",
+            Value = "byte"
+        };
+    }
+    public static DefaultType String()
+    {
+        return new DefaultType()
+        {
+            Name = "String",
+            Value = "string"
+        };
+    }
 }
