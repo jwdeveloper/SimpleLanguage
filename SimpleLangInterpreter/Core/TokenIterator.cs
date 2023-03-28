@@ -2,7 +2,7 @@
 
 public class TokenIterator
 {
-    private readonly List<SyntaxToken> tokens;
+    protected readonly List<SyntaxToken> tokens;
     private SyntaxToken currnet;
     private int position;
 

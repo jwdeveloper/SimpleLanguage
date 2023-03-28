@@ -8,7 +8,9 @@ public class Parser : TokenIterator
 
     public Parser(List<SyntaxToken> tokens) : base(tokens)
     {
-        
+        this.tokens.RemoveAll(e => e.TokenType == TokenType.WhiteSpace);
+
+
     }
     
     public Program Parse()
@@ -23,21 +25,24 @@ public class Parser : TokenIterator
             {
                 var result = ParseLineExpression(currentTokens);
                 root.Nodes.Add(result);
-                Advance();
+                Advance(); 
                 continue;
             }
-            if (Current().Symbol == "(")
+            if (Current().TokenType == TokenType.OperationToken)
             {
-                
-                break;
-            }
-            if (Current().Symbol == "{")
-            {
-                
-                break;
+                switch (Current().Symbol)
+                {
+                    case "while":
+                        
+                        break;
+                    case "if":
+                        root.Nodes.Add(ParseIf());
+                        break;
+                }
+                continue;
             }
 
-            if (Current().TokenType == TokenType.WhiteSpace)
+            if (Current().TokenType is TokenType.WhiteSpace or TokenType.Comment)
             {
                 Advance();
                 continue;
@@ -50,13 +55,151 @@ public class Parser : TokenIterator
     }
 
 
+  
+
+
+    public ExpresionSyntax ParseIf()
+    {
+        var ifToken = MatchToken("if");
+        var logicArgument = ParseLogicalArgument();
+        var body = ParseBody();
+
+        if (Peek(1).Symbol != "else")
+        {
+            return new IfExpression(ifToken, logicArgument, body, null);
+        }
+        var elseBody = ParseBody();
+        return new IfExpression(ifToken, logicArgument, body, elseBody);
+    }
+
+
+    public ExpresionSyntax ParseLogicalArgument()
+    {
+        var openParentas = MatchToken("(");
+        var content = getBetween("(", ")");
+        var expresion = ParseLineExpression(content);
+        var closeParentasis = MatchToken(")");
+        return expresion;
+    }
+    
+    public ExpresionSyntax ParseBody()
+    {
+        var openParentas = MatchToken("{");
+        
+        var bettween = getBetween("{", "}");
+        var expresion = ParseLineExpression(bettween);
+        var closeParentasis = MatchToken("}");
+        return expresion;
+    }
+
+
+    public List<SyntaxToken> getBetween(string from, string to)
+    {
+        var openCount = 1;
+        var closeCount = 0;
+        var content = new List<SyntaxToken>();
+        do
+        {
+            if (!IsValid())
+            {
+                break;
+            }
+            if (Current().Symbol == from)
+            {
+                openCount++;
+            }
+
+            if (Current().Symbol == to)
+            {
+                closeCount++;
+            }
+            content.Add(Current());
+            if (openCount == closeCount)
+            {
+                break;
+            }
+            Advance();
+        } while (openCount != closeCount);
+
+        var last = content.Last();
+
+        content.Remove(last);
+        return content;
+    }
+    
+    public List<SyntaxToken> getBetween(string from, string to, TokenIterator iterator)
+    {
+        var openCount = 1;
+        var closeCount = 0;
+        var content = new List<SyntaxToken>();
+        do
+        {
+            if (!iterator.IsValid())
+            {
+                break;
+            }
+            if (iterator.Current().Symbol == from)
+            {
+                openCount++;
+            }
+
+            if (iterator.Current().Symbol == to)
+            {
+                closeCount++;
+            }
+            content.Add(iterator.Current());
+            if (openCount == closeCount)
+            {
+                break;
+            }
+            iterator.Advance();
+        } while (openCount != closeCount);
+
+        var last = content.Last();
+
+        content.Remove(last);
+        return content;
+    }
+
+
     public ExpresionSyntax ParseLineExpression(List<SyntaxToken> tokens)
     {
+        if (tokens.Count == 0)
+        {
+            return new  UndefindExpression("No more tokens to parse");
+        }
 
+        
         var bestBinary = FindBestBinaryTokens(tokens);
         if (bestBinary.Key == -1)
         {
-            return new NumberNode(tokens[0]);
+            if (tokens.Count == 2)
+            {
+                var contains = tokens.Find(c => c.Symbol == "(" || c.Symbol == ")");
+                if (contains != null)
+                {
+                    tokens.Remove(contains);
+                }
+            }
+            
+            if (tokens.Count == 1)
+            {
+                var token = tokens[0];
+                switch (token.TokenType)
+                {
+                    case TokenType.NumberToken:
+                        return new NumberNode(tokens[0]);
+                    case TokenType.StringToken:
+                        return new StringNode(tokens[0]);
+                    default:
+                        return new UndefindExpression("Unknown type of token");
+                } 
+            }
+            
+            if (isFunctionCall(tokens, out var expresion))
+            {
+                return expresion;
+            }
         }
         var index = bestBinary.Key;
         var binaryThing = bestBinary.Value;
@@ -69,7 +212,38 @@ public class Parser : TokenIterator
         
         return new BinaryExpression(binaryThing,leftExp, rightExp);
     }
+    
+    public bool isFunctionCall(List<SyntaxToken> tokens, out ExpresionSyntax expresionSyntax)
+    {
+        expresionSyntax = null;
+        var iterator = new TokenIterator(tokens);
+        iterator.Advance();
 
+        var functionName = iterator.Current();
+        iterator.Advance();
+        var next = iterator.Current();
+        iterator.Advance();
+        if (functionName.TokenType != TokenType.LitteralToken && next.Symbol != "(")
+        {
+            return false;
+        }
+        var content = getBetween("(", ")", iterator);
+        content.RemoveAll(e => e.Symbol == ",");
+
+        var arguments = new List<ExpresionSyntax>();
+        foreach(var con in content)
+        {
+          var exp =  ParseLineExpression(new List<SyntaxToken>() {con});
+          arguments.Add(exp);
+        }
+
+        expresionSyntax = new FunctionCallExpression(functionName, functionName.Symbol, arguments);
+        return true;
+    }
+
+
+
+    
     public KeyValuePair<int,SyntaxToken> FindBestBinaryTokens(List<SyntaxToken> tokens)
     {
         SyntaxToken token = null;
@@ -82,8 +256,6 @@ public class Parser : TokenIterator
             {
                 continue;
             }
-
-
             var number = GetBinaryTokenValue(current.Symbol);
             if (number <= biggerValue)
             {
@@ -145,6 +317,49 @@ public class Parser : TokenIterator
         }
         return operations;
     }
+    
+    private SyntaxToken MatchToken(string content, bool current = true)
+    {
+        if (current)
+        {
+            var peek = Current();
+            if (peek.Symbol ==  content)
+                return Advance(); 
+        }
+        else
+        {
+            var peek = Peek(1);
+            if (peek.Symbol ==  content)
+                return Advance();
+        }
+        
+        
+      
+
+        throw new Exception("Token not match! " + content);
+        return new SyntaxToken
+        {
+            Name = "Error",
+            TokenType = TokenType.Undefined,
+            Symbol = "Error"
+            
+        };
+    }
+    
+    private SyntaxToken MatchToken(TokenType type)
+    {
+        if (Current().TokenType ==  type)
+            return Advance();
+
+        throw new Exception("Token not match! " + type);
+        return new SyntaxToken
+        {
+            Name = "Error",
+            TokenType = type,
+            Symbol = "Error"
+        };
+    }
+    
     
     public List<SyntaxToken> CloneSymbols(List<SyntaxToken> symbols, int from, int to)
     {

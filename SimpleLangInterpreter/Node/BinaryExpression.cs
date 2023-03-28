@@ -25,18 +25,10 @@ public class BinaryExpression : ExpresionSyntax
         return NodeType.BinaryExpression;
     }
 
-    public override string execute()
+    public override object execute()
     {
-        var leftValue = left.execute();
-        var rightValue = righ.execute();
-        if (!double.TryParse(leftValue, out var leftDecimal))
-        {
-            throw new Exception("Unable to parse left value " + left.getValue());
-        }
-        if (!double.TryParse(rightValue, out var rightDecimal))
-        {
-            throw new Exception("Unable to parse right value " + left.getValue());
-        }
+        var leftDecimal = (double)left.execute();
+        var rightDecimal = (double)righ.execute();
 
         object result = 0;
         switch (token.Symbol)
@@ -57,19 +49,19 @@ public class BinaryExpression : ExpresionSyntax
                 result = Math.Pow(leftDecimal, rightDecimal);
                 break;
             case "==":
-                result = leftDecimal == rightDecimal ? 1 : 0;
+                result = leftDecimal == rightDecimal;
                 break;
             case ">=":
-                result = leftDecimal >= rightDecimal ? 1 : 0;
+                result = leftDecimal >= rightDecimal ;
                 break;
             case "<=":
-                result = leftDecimal <= rightDecimal ? 1 : 0;
+                result = leftDecimal <= rightDecimal;
                 break;
             case ">":
-                result = leftDecimal > rightDecimal ? 1 : 0;
+                result = leftDecimal > rightDecimal;
                 break;
             case "<":
-                result = leftDecimal < rightDecimal ? 1 : 0;
+                result = leftDecimal < rightDecimal;
                 break;
             case "and":
                 result = leftDecimal > 0 && rightDecimal > 0;
@@ -78,6 +70,6 @@ public class BinaryExpression : ExpresionSyntax
                 result = leftDecimal > 0 || rightDecimal > 0;
                 break;
         }
-        return result.ToString();
+        return result;
     }
 }

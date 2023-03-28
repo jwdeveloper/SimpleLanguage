@@ -5,21 +5,25 @@ namespace SimpleLangInterpreter.Evaliating;
 
 public class Evaluator
 {
+    StringBuilder output = new StringBuilder();
+
     public string runProgram(Program program)
     {
-        var output = new StringBuilder();
-
-
-
+        output = new StringBuilder();
         foreach (var current in program.getChildren())
         {
-            if (current is BinaryExpression ex)
+            if (current is ExpresionSyntax ex)
             {
-                output.AppendLine(ex.execute());
+                ex.setEvaluator(this);
+                output.AppendLine(ex.execute().ToString());
             }
-            
         }
 
         return output.ToString();
+    }
+
+    public void CallConsole(string input)
+    {
+        output.Append(input);
     }
 }

@@ -1,16 +1,15 @@
 ﻿namespace SimpleLangInterpreter.Node;
 
-public class NumberNode : ExpresionSyntax
+public class StringNode : ExpresionSyntax
 {
-    public NumberNode(SyntaxToken token) : base(token)
+    public StringNode(SyntaxToken token) : base(token)
     {
         
     }
-
-
-    public override object execute()
+    
+    public override string execute()
     {
-        return double.Parse(token.Symbol);
+        return token.Symbol;
     }
 
     public override string getValue()
@@ -20,7 +19,7 @@ public class NumberNode : ExpresionSyntax
     
     public override IEnumerable<SyntaxNode> getChildren()
     {
-       return Enumerable.Empty<SyntaxNode>();
+        return Enumerable.Empty<SyntaxNode>();
     }
 
     public override NodeType getNoteType()

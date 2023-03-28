@@ -1,9 +1,12 @@
-﻿namespace SimpleLangInterpreter.Node;
+﻿using SimpleLangInterpreter.Evaliating;
+
+namespace SimpleLangInterpreter.Node;
 
 public abstract  class ExpresionSyntax : SyntaxNode
 {
 
     protected readonly SyntaxToken token;
+    protected Evaluator evaluator;
 
 
     public ExpresionSyntax(SyntaxToken token)
@@ -18,7 +21,20 @@ public abstract  class ExpresionSyntax : SyntaxNode
     }
 
 
-    public abstract string execute();
+    public void setEvaluator(Evaluator evaluator)
+    {
+        this.evaluator = evaluator;
+        foreach(var child in getChildren())
+        {
+            if (child is ExpresionSyntax c)
+            {
+                c.setEvaluator(evaluator);
+            }
+        }
+    }
+
+
+    public abstract object execute();
     
     public virtual string getValue()
     {
