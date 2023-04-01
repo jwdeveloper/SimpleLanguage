@@ -16,7 +16,7 @@ using SimpleLangInterpreter;
 using SimpleLangInterpreter.ColorStyle;
 using SimpleLangInterpreter.Core;
 using SimpleLangInterpreter.Evaliating;
-using Color = System.Drawing.Color;
+
 
 namespace SimpleLangGui
 {
@@ -91,7 +91,7 @@ namespace SimpleLangGui
                     continue;
                 
                 var run = new Run(token.ToString());
-                run.Foreground = new SolidColorBrush(CodePainter.getColor(token));
+                run.Foreground = new SolidColorBrush(getColor(token));
                 paragraf.Inlines.Add(run);
             }
             Output_token.Document.Blocks.Add(paragraf);
@@ -112,7 +112,7 @@ namespace SimpleLangGui
                 }
                 
                 var run = new Run(token.Symbol);
-                run.Foreground = new SolidColorBrush(CodePainter.getColor(token));
+                run.Foreground = new SolidColorBrush(getColor(token));
                 paragraf.Inlines.Add(run);
             }
             Input.Document.Blocks.Add(paragraf);
@@ -134,6 +134,39 @@ namespace SimpleLangGui
         {
             rtb.Document.Blocks.Clear();
             rtb.Document.Blocks.Add(new Paragraph(new Run(text)));
+        }
+
+        public static Color getColor(SyntaxToken token)
+        {
+            switch (token.TokenType)
+            {
+                case TokenType.Comment:
+                    {
+                        return Colors.Green;
+                    }
+                case TokenType.BinaryToken:
+                    {
+                        return Colors.Blue;
+                    }
+                case TokenType.NumberToken:
+                    {
+                        return Colors.Pink;
+                    }
+                case TokenType.StringToken:
+                    {
+                        return Colors.Orange;
+                    }
+                case TokenType.TypeToken:
+                    {
+                        return Colors.DarkBlue;
+                    }
+                case TokenType.Undefined:
+                    {
+                        return Colors.Green;
+                    }
+            }
+
+            return Colors.Black;
         }
     }
 }
