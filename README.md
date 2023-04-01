@@ -1,6 +1,6 @@
 # SL - SimpleLang
 
-My goal of this project is to learn how does programming languages works under the hood.
+The goal of this project is to learn how does programming languages works under the hood.
 ## Currently SL supports
  - variable declaration
  - variable value assigment
