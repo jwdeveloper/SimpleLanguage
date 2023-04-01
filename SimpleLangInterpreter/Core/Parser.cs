@@ -25,6 +25,7 @@ public class Parser : TokenIterator
             {
                 var result = ParseLineExpression(currentTokens);
                 root.Nodes.Add(result);
+                currentTokens.Clear();
                 Advance(); 
                 continue;
             }
@@ -33,10 +34,12 @@ public class Parser : TokenIterator
                 switch (Current().Symbol)
                 {
                     case "while":
-                        
+                        root.Nodes.Add(ParseWhile());
                         break;
                     case "if":
                         root.Nodes.Add(ParseIf());
+                        break;
+                    case "for":
                         break;
                 }
                 continue;
@@ -56,7 +59,13 @@ public class Parser : TokenIterator
 
 
   
-
+    public ExpresionSyntax ParseWhile()
+    {
+        var ifToken = MatchToken("while");
+        var logicArgument = ParseLogicalArgument();
+        var body = ParseBody();
+        return new WhileExpression(ifToken, logicArgument, body);
+    }
 
     public ExpresionSyntax ParseIf()
     {
@@ -64,13 +73,16 @@ public class Parser : TokenIterator
         var logicArgument = ParseLogicalArgument();
         var body = ParseBody();
 
-        if (Peek(1).Symbol != "else")
+        if (Current().Symbol != "else")
         {
             return new IfExpression(ifToken, logicArgument, body, null);
         }
+        Advance();
         var elseBody = ParseBody();
         return new IfExpression(ifToken, logicArgument, body, elseBody);
     }
+    
+    
 
 
     public ExpresionSyntax ParseLogicalArgument()
@@ -87,7 +99,11 @@ public class Parser : TokenIterator
         var openParentas = MatchToken("{");
         
         var bettween = getBetween("{", "}");
-        var expresion = ParseLineExpression(bettween);
+
+        var perser = new Parser(bettween);
+
+        var expresion = perser.Parse();
+        //var expresion = ParseLineExpression(bettween);
         var closeParentasis = MatchToken("}");
         return expresion;
     }
@@ -188,9 +204,18 @@ public class Parser : TokenIterator
                 switch (token.TokenType)
                 {
                     case TokenType.NumberToken:
-                        return new NumberNode(tokens[0]);
+                        return new NumberNode(token);
                     case TokenType.StringToken:
-                        return new StringNode(tokens[0]);
+                        return new StringNode(token);
+                    case TokenType.KeywordToken:
+                        if (token.Symbol == "true" || token.Symbol == "false")
+                        {
+                            return new BoolNode(token);
+                        }
+                        return new UndefindExpression("Unknown type of token");
+                    
+                    case TokenType.LitteralToken:
+                        return new VariableNode(token);
                     default:
                         return new UndefindExpression("Unknown type of token");
                 } 
@@ -199,6 +224,11 @@ public class Parser : TokenIterator
             if (isFunctionCall(tokens, out var expresion))
             {
                 return expresion;
+            }
+
+            if (isCreateVariable(tokens, out var create))
+            {
+                return create;
             }
         }
         var index = bestBinary.Key;
@@ -212,6 +242,19 @@ public class Parser : TokenIterator
         
         return new BinaryExpression(binaryThing,leftExp, rightExp);
     }
+
+
+    public bool isCreateVariable(List<SyntaxToken> tokens, out ExpresionSyntax expresionSyntax)
+    {
+        expresionSyntax = null;
+        if (tokens.Count != 2)
+        {
+            return false;
+        }
+        expresionSyntax = new CreateVariableExpersion(tokens[0],tokens[1]);
+        return true;
+    }
+    
     
     public bool isFunctionCall(List<SyntaxToken> tokens, out ExpresionSyntax expresionSyntax)
     {

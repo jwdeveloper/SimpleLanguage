@@ -65,6 +65,12 @@ public class LexerPostProcessor : TokenIterator
                 result.Add(logic);
                 continue;
             }
+
+            if (HandleBool(out var boolen))
+            {
+                result.Add(boolen);
+                continue;
+            }
             
             result.Add(current);
             Advance();
@@ -223,6 +229,24 @@ public class LexerPostProcessor : TokenIterator
         return true;
     }
 
+    private bool HandleBool(out SyntaxToken token)
+    {
+        token = null;
+        var current = Current();
+        if(current.Symbol == "true" || current.Symbol == "false")
+        {
+            token = new SyntaxToken
+            {
+                Name = "Bool:"+current,
+                Symbol = current.Symbol,
+                TokenType = TokenType.KeywordToken,
+                Position = current.Position
+            };
+            return true;
+        }
+
+        return false;
+    }
     
     private bool HandleLogic(out SyntaxToken token)
     {
@@ -271,8 +295,6 @@ public class LexerPostProcessor : TokenIterator
             };
             return true;
         }
-        
-      
         return false;
     }
     

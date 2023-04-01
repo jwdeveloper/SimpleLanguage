@@ -28,7 +28,19 @@ public class FunctionCallExpression: ExpresionSyntax
             var res = string.Empty;
             foreach (var argument in arguments)
             {
-                res += argument.execute() + " ";
+
+                var val = argument.execute();
+                if (val  is string  str && str.Contains("/br"))
+                {
+                    res += "\n" ;
+                }
+                else
+                {
+                    res += val+ " ";
+                }
+                
+                
+                
             }
 
             if (evaluator != null)

@@ -1,10 +1,21 @@
 ﻿namespace SimpleLangInterpreter.Node;
 
-public class Program : SyntaxNode
+public class Program : ExpresionSyntax
 {
+    
+    public Program() : base(new SyntaxToken
+    {
+        Name = "Program",
+        TokenType = TokenType.Undefined,
+        Symbol = "",
+    })
+    {
+    }
+    
     public List<SyntaxNode> Nodes { get; set; } = new List<SyntaxNode>();
 
-    public IEnumerable<SyntaxNode> getChildren()
+
+    public override IEnumerable<SyntaxNode> getChildren()
     {
         return Nodes;
     }
@@ -12,6 +23,19 @@ public class Program : SyntaxNode
     public NodeType getNoteType()
     {
         return NodeType.Program;;
+    }
+
+    public override object execute()
+    {
+        foreach(var child in getChildren())
+        {
+            if (child is ExpresionSyntax ex)
+            {
+                ex.execute();
+            }
+        }
+
+        return true;
     }
 
     public string getValue()
@@ -24,4 +48,6 @@ public class Program : SyntaxNode
     {
         return SyntaxNode.PrettyPrint(this,"",false);
     }
+
+   
 }

@@ -6,8 +6,8 @@ public class IfExpression : ExpresionSyntax
     private readonly ExpresionSyntax body;
     private readonly ExpresionSyntax elseBody;
 
-    public IfExpression(SyntaxToken token, ExpresionSyntax arguments, ExpresionSyntax body,
-        ExpresionSyntax elseBody) : base(token)
+    public IfExpression(SyntaxToken token, ExpresionSyntax arguments, ExpresionSyntax body, ExpresionSyntax elseBody) : base(token)
+        
     {
         this.arguments = arguments;
         this.body = body;
@@ -39,7 +39,7 @@ public class IfExpression : ExpresionSyntax
 
     public override object execute()
     {
-        var result = (bool) arguments.execute();
+        var result = isTrue();
         if (result)
         {
             body.execute();
@@ -54,5 +54,15 @@ public class IfExpression : ExpresionSyntax
             elseBody.execute();
         }
         return result;
+    }
+
+    public bool isTrue()
+    {
+        var argument = arguments.execute();
+        if (argument is bool arg)
+        {
+            return arg;
+        }
+        return argument != null;
     }
 }

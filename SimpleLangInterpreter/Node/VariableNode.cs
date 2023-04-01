@@ -1,15 +1,14 @@
-﻿namespace SimpleLangInterpreter.Node;
+namespace SimpleLangInterpreter.Node;
 
-public class StringNode : ExpresionSyntax
+public class VariableNode: ExpresionSyntax
 {
-    public StringNode(SyntaxToken token) : base(token)
+    public VariableNode(SyntaxToken token) : base(token)
     {
-        
     }
-    
-    public override string execute()
+   
+    public override object execute()
     {
-        return token.Symbol;
+       return evaluator.GetVariableValue(token.Symbol);
     }
 
     public override string getValue()
@@ -24,6 +23,6 @@ public class StringNode : ExpresionSyntax
 
     public override NodeType getNoteType()
     {
-        return NodeType.StringNode;
+        return NodeType.VariableNode;
     }
 }

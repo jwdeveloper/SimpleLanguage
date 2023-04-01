@@ -5,7 +5,7 @@ namespace SimpleLangInterpreter.Node;
 public abstract  class ExpresionSyntax : SyntaxNode
 {
 
-    protected readonly SyntaxToken token;
+    public readonly SyntaxToken token;
     protected Evaluator evaluator;
 
 
