@@ -14,7 +14,7 @@ The goal of this project is to learn how does programming languages works under 
  - clear() `clear();` Clears conosle output
  - sleep(number) `sleep(1000);` Program is paused for X miliseconds
 
-[Try it now](https://github.com/jwdeveloper/SimpleLanguage/releases/download/1.0.0/SimpleLangGui.exe)
+[Try it now](https://github.com/jwdeveloper/SimpleLanguage/releases/latest/download/SimpleLangGui.exe)
 
 ![image](https://user-images.githubusercontent.com/79764581/229307865-e7d81187-0072-4453-9443-105a92e9f498.png)
 
