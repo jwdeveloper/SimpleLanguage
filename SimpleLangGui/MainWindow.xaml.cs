@@ -67,15 +67,17 @@ namespace SimpleLangGui
 
                     var postProcessr = new LexerPostProcessor(tokens);
                     tokens = postProcessr.FilterTokens();
+                  
+                    var interpreter = new Parser(tokens);
+                    var program = interpreter.Parse();
+                    var evaluator = new Evaluator(null, token);
                     Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
                         Clear(Output_program);
                         setTokensColors(tokens);
+                        SetText(Output_tree,program.Print());
                     }));
 
-                    var interpreter = new Parser(tokens);
-                    var program = interpreter.Parse();
-                    var evaluator = new Evaluator(null, token);
                     evaluator.OnConsole(s =>
                     {
                         Application.Current.Dispatcher.Invoke(new Action(() =>
