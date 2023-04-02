@@ -39,7 +39,7 @@ public class IfExpression : ExpresionSyntax
 
     public override object execute()
     {
-        var result = isTrue();
+        var result = IsIfArgumentsTrue();
         if (result)
         {
             body.execute();
@@ -50,13 +50,12 @@ public class IfExpression : ExpresionSyntax
             {
                 return result;
             }
-            
             elseBody.execute();
         }
         return result;
     }
 
-    public bool isTrue()
+    public bool IsIfArgumentsTrue()
     {
         var argument = arguments.execute();
         if (argument is bool arg)

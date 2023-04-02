@@ -21,6 +21,7 @@ public class CreateVariableExpersion : ExpresionSyntax
 
     public override object execute()
     {
+        evaluator.CreateVariable(VariableName.Symbol, null);
         return true;
     }
 }

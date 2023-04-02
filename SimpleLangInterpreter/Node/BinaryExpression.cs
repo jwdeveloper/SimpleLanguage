@@ -3,8 +3,8 @@
 public class BinaryExpression : ExpresionSyntax
 {
 
-    private readonly ExpresionSyntax left;
-    private readonly ExpresionSyntax righ;
+    protected readonly ExpresionSyntax left;
+    protected readonly ExpresionSyntax righ;
     
     public BinaryExpression(SyntaxToken operation,ExpresionSyntax left, ExpresionSyntax right) : base(operation)
     {
@@ -32,7 +32,8 @@ public class BinaryExpression : ExpresionSyntax
 
             if (left is CreateVariableExpersion createVariale)
             {
-                return handleCreateVariable(createVariale);
+                createVariale.execute();
+                return handleAssigmentVariable(createVariale.VariableName.Symbol);
             }
             if (left.token.TokenType == TokenType.LitteralToken)
             {
@@ -86,12 +87,7 @@ public class BinaryExpression : ExpresionSyntax
         return false;
     }
 
-    public bool handleCreateVariable(CreateVariableExpersion createVariableExpersion)
-    {
-        var value = righ.execute();
 
-        return evaluator.CreateVariable(createVariableExpersion.VariableName.Symbol, value);
-    }
     
     public bool handleAssigmentVariable(string name)
     {

@@ -40,6 +40,7 @@ public class Parser : TokenIterator
                         root.Nodes.Add(ParseIf());
                         break;
                     case "for":
+                        root.Nodes.Add(ParseFor());
                         break;
                 }
                 continue;
@@ -82,7 +83,29 @@ public class Parser : TokenIterator
         return new IfExpression(ifToken, logicArgument, body, elseBody);
     }
     
-    
+    public ExpresionSyntax ParseFor()
+    {
+        var ifToken = MatchToken("for");
+        var openParentas = MatchToken("(");
+        var content = getBetween("(", ")");
+        var closeParentasis = MatchToken(")");
+        
+        if (content.Find(c => c.Symbol == "in") != null)
+        {
+            var arguments = ParseLineExpression(content);
+            if (arguments is not InExpression inExpresion)
+            {
+                throw new Exception("Bad formatting of foreach");
+            }
+            var body2 = ParseBody();
+            return new ForEachExpression(ifToken, inExpresion, body2); 
+        }
+        
+        
+        var lines = new Parser(content).Parse();
+        var body = ParseBody();
+        return new ForExpression(ifToken, lines.Nodes, body);
+    }
 
 
     public ExpresionSyntax ParseLogicalArgument()
@@ -230,6 +253,12 @@ public class Parser : TokenIterator
             {
                 return create;
             }
+            if (isIn(tokens, out var inExpresion))
+            {
+                return inExpresion;
+            }
+
+            throw new Exception("Bad formatting of the expression ");
         }
         var index = bestBinary.Key;
         var binaryThing = bestBinary.Value;
@@ -243,6 +272,24 @@ public class Parser : TokenIterator
         return new BinaryExpression(binaryThing,leftExp, rightExp);
     }
 
+    
+    public bool isIn(List<SyntaxToken> tokens, out ExpresionSyntax expresionSyntax)
+    {
+        expresionSyntax = null;
+        var inIndex = tokens.FindIndex(e => e.Symbol == "in");
+        if (inIndex == -1) 
+        {
+            return false;
+        }
+        var left = tokens.GetRange(0, inIndex);
+        var right = tokens.GetRange(inIndex + 1, (tokens.Count - 1)-inIndex );
+
+        var leftExp = ParseLineExpression(left);
+        var rightExp = ParseLineExpression(right);
+        
+        expresionSyntax = new InExpression(base.tokens[inIndex],leftExp,rightExp);
+        return true;
+    }
 
     public bool isCreateVariable(List<SyntaxToken> tokens, out ExpresionSyntax expresionSyntax)
     {

@@ -1,4 +1,6 @@
-﻿namespace SimpleLangInterpreter.Node;
+﻿using SimpleLangInterpreter.Evaliating;
+
+namespace SimpleLangInterpreter.Node;
 
 public class Program : ExpresionSyntax
 {
@@ -27,14 +29,8 @@ public class Program : ExpresionSyntax
 
     public override object execute()
     {
-        foreach(var child in getChildren())
-        {
-            if (child is ExpresionSyntax ex)
-            {
-                ex.execute();
-            }
-        }
-
+        var eva = new Evaluator(this.evaluator, this.evaluator.cancellationToken);
+        eva.runProgram(this);
         return true;
     }
 
