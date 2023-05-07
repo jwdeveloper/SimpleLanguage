@@ -34,6 +34,7 @@ public class StringHandler : ITokenHandler
            
         }
         
+       
         return Token.BadToken($"String is not closed: {sb}", iterator.Position());
     }
 }

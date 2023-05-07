@@ -1,11 +1,3 @@
- 
-
-
-
-
-
-
-
 using SL.Core.Api;
 using SL.Core.Common;
 
@@ -13,13 +5,13 @@ namespace SL.Core.Lexing;
 
 public class Lexer
 {
-    private CharIterator _iterator;
-    private Dictionary<string, ITokenHandler> _handlers;
-    private HashSet<string> _ignores;
+    private readonly CharIterator _iterator;
+    private readonly Dictionary<string, ITokenHandler> _handlers;
+    private readonly HashSet<string> _ignores;
 
     public Lexer(CharIterator iterator,
-                 Dictionary<string, ITokenHandler> handlers,
-                 HashSet<string> ignores)
+        Dictionary<string, ITokenHandler> handlers,
+        HashSet<string> ignores)
     {
         _iterator = iterator;
         _handlers = handlers;
@@ -57,7 +49,7 @@ public class Lexer
             var nextSymbol = _iterator.Peek(1).ToString();
             if (_handlers.ContainsKey(nextSymbol) || _ignores.Contains(nextSymbol))
             {
-                return new Token(TokenType.LITERRAL, symbol, _iterator.Position());
+                return new Token(TokenType.IDENTIFIER, symbol, _iterator.Position());
             }
 
             _iterator.Advance();
@@ -78,10 +70,42 @@ public class Lexer
         do
         {
             token = await Lex(ctx);
-            tokens.Add(token);
-        } 
-        while (token.Type != TokenType.END_OF_FILE && token.Type != TokenType.BAD_TOKEN);
+            if (token.Type == TokenType.IGNORED)
+            {
+                continue;
+            }
 
-        return tokens;
+            tokens.Add(token);
+        } while (!ctx.IsCancellationRequested &&
+                 (token.Type != TokenType.END_OF_FILE && token.Type != TokenType.BAD_TOKEN));
+
+        var cleared = new List<Token>();
+        for (var i = 1; i < tokens.Count(); i++)
+        {
+            var one = tokens[i - 1];
+            var two = tokens[i];
+
+            var value = one.Value + two.Value;
+            if (_handlers.ContainsKey(value))
+            {
+                var handler = _handlers[value];
+                var tokenaa = await handler.Handle(value, _iterator, ctx);
+                cleared.Add(tokenaa);
+                i += 1;
+                continue;
+            }
+            else
+            {
+                cleared.Add(one);
+            }
+        }
+
+
+        return cleared;
+    }
+
+    public async Task<TokenIterator> LexAllToInterator(CancellationToken ctx = new CancellationToken())
+    {
+        return new TokenIterator(await LexAll(ctx), Token.EndOfFile(null), ctx);
     }
 }

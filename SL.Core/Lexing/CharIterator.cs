@@ -59,7 +59,13 @@ public class CharIterator : IIterator<char>
         return  _target[index];
     }
 
-    
+    public bool IsEnded()
+    {
+        return _current == _endValue;
+    }
 
-
+    public IPosition Position()
+    {
+        return _position;
+    }
 }
