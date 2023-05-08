@@ -1,8 +1,9 @@
+using System.Dynamic;
 using SL.Core.Parsing.AST.Expressions;
 
 namespace SL.Core.Parsing.AST;
 
-public class ParameterStatement
+public class ParameterStatement : Node
 {
     private IdentifierLiteral paramterType;
 
@@ -13,5 +14,15 @@ public class ParameterStatement
     {
         this.paramterType = paramterType;
         this.parameterName = parameterName;
+    }
+    
+    
+    public override dynamic GetModel()
+    {
+        dynamic model = new ExpandoObject();
+        model.name = Name();
+        model.parameterType = paramterType?.GetModel();
+        model.parameterName = parameterName?.GetModel();
+        return model;
     }
 }

@@ -15,6 +15,12 @@ public class Position  : IPosition
         this.Column = Column;
     }
 
+
+    public override string ToString()
+    {
+        return $"Index: {Index} Line: {Line} Column: {Column}";
+    }
+
     public IPosition Clone()
     {
         return new Position(Index, Line, Column);

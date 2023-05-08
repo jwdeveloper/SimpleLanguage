@@ -1,3 +1,5 @@
+using System.Dynamic;
+
 namespace SL.Core.Parsing.AST.Expressions;
 
 public abstract class Literal : Expression
@@ -10,6 +12,16 @@ public abstract class Literal : Expression
     {
         Value = value;
         LiteralType = literalType;
+    }
+
+
+    public override dynamic GetModel()
+    {
+        dynamic model = new ExpandoObject();
+        model.name = Name();
+        model.value = Value;
+        model.type = LiteralType;
+        return model;
     }
 }
 

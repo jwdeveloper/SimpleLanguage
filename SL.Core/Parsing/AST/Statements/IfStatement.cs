@@ -1,3 +1,5 @@
+using System.Dynamic;
+
 namespace SL.Core.Parsing.AST;
 
 public class IfStatement : Statement
@@ -15,5 +17,14 @@ public class IfStatement : Statement
         Condition = condition;
     }
 
+    public override dynamic GetModel()
+    {
+        dynamic model = new ExpandoObject();
+        model.name = Name();
+        model.condition = Condition.GetModel();
+        model.body = Body.GetModel();
+        model.elseIf = ElseBody?.GetModel();
+        return model;
+    }
  
 }

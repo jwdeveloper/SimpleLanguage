@@ -9,7 +9,12 @@ public record Token(TokenType Type, string Value, IPosition Position)
     public static Token BadToken(string message, IPosition position) => new Token(TokenType.BAD_TOKEN, message, position);
     
     public static Token Canceled(IPosition position) => new Token(TokenType.BAD_TOKEN, "Lexing Canceled", position);
-  
+
+
+    public override string ToString()
+    {
+        return $"Type: {Type} Value: {Value}";
+    }
 }
 
 public enum TokenType

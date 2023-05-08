@@ -30,7 +30,7 @@ public class ParserTestBase
         builder.WithContent(content);
         builder.WithIgnore(" ");
         builder.WithIgnore("\n");
-
+        builder.WithIgnore("\r");
 
         builder.WithSymbol("=", TokenType.ASSIGMENT);
  

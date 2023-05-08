@@ -1,3 +1,4 @@
+using System.Dynamic;
 using SL.Core.Common;
 
 namespace SL.Core.Parsing.AST.Expressions;
@@ -17,5 +18,13 @@ public class BinaryExpression : Expression
         Right = right;
     }
 
- 
+    public override dynamic GetModel()
+    {
+        dynamic model = new ExpandoObject();
+        model.name = Name();
+        model.left =Left;
+        model.operatioin =Operator;
+        model.right =Right;
+        return model;
+    }
 }

@@ -50,7 +50,7 @@ public class NodeFactory
     public FunctionCallExpression FunctionCallExpression(
         IdentifierLiteral functionName,
         List<Expression> paramteters,
-        FunctionCallExpression nextCall)
+        Expression nextCall)
     {
         return new FunctionCallExpression(functionName, paramteters, nextCall);
     }

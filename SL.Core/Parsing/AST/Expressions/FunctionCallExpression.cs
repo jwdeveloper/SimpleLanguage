@@ -1,23 +1,44 @@
+
+
+using System.Dynamic;
+
 namespace SL.Core.Parsing.AST.Expressions;
 
 public class FunctionCallExpression : Expression
 {
     
-    private IdentifierLiteral _functionName;
+    public IdentifierLiteral FunctionName { get; }
 
-    private List<Expression> _paramteters;
+    public List<Expression> Paramteters { get; }
 
-    private FunctionCallExpression _nextCall;
+    public Expression NextCall { get; }
     
     
     public FunctionCallExpression(IdentifierLiteral functionName,
         List<Expression> paramteters,
-        FunctionCallExpression nextCall)
+        Expression nextCall)
     {
-        this._functionName = functionName;
-        this._paramteters = paramteters;
-        this._nextCall = nextCall;
+        this.FunctionName = functionName;
+        this.Paramteters = paramteters;
+        this.NextCall = nextCall;
     }
 
+    
+    public override dynamic GetModel()
+    {
+        dynamic model = new ExpandoObject();
+        model.name = Name();
+        model.functionName =FunctionName.GetModel();
+       
+        var parametersModel = new List<dynamic>();
+        foreach(var paramerter in Paramteters)
+        {
+            parametersModel.Add(paramerter.GetModel());
+        }
+        model.parameters =parametersModel;
+        
+        model.nextExpressionCall =NextCall?.GetModel();
+        return model;
+    }
 
 }

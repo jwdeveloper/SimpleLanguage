@@ -1,3 +1,4 @@
+using System.Dynamic;
 using SL.Core.Common;
 
 namespace SL.Core.Parsing.AST;
@@ -19,5 +20,17 @@ public class VariableStatement : Statement
         return _variableDeclarations;
     }
     
-    
+    public override dynamic GetModel()
+    {
+        dynamic model = new ExpandoObject();
+        model.name = Name();
+        model.variableType =VariableType;
+        var parametersModel = new List<dynamic>();
+        foreach(var paramerter in _variableDeclarations)
+        {
+            parametersModel.Add(paramerter.GetModel());
+        }
+        model.declarations =parametersModel;
+        return model;
+    }
 }

@@ -1,3 +1,5 @@
+using System.Dynamic;
+
 namespace SL.Core.Parsing.AST;
 
 public class ForStatement : Statement
@@ -22,4 +24,18 @@ public class ForStatement : Statement
         this.body = body;
         this.isForeach = isForeach;
     }
+
+
+
+    public override dynamic GetModel()
+    {
+        dynamic model = new ExpandoObject();
+        model.name = Name();
+        model.declaration = declaration?.GetModel();
+        model.iterator = condition?.GetModel();
+        model.assigment = assigment?.GetModel();
+        model.body = body.GetModel();
+        return model;
+    }
+
 }

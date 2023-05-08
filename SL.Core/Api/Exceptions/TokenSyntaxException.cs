@@ -13,6 +13,6 @@ public class BadTokenException : Exception
 
     private static string ParseMessage(string excepted, Token current)
     {
-        return $"Excepted token: {excepted} instead of {current.Value} at position {current.Position}";
+        return $"Excepted token: {excepted} instead of {current} at position {current.Position}";
     }
 }

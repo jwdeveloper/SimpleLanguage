@@ -1,14 +1,16 @@
+using SL.Core.Common;
+
 namespace SL.Core.Api.Exceptions;
 
 public class SyntaxException : Exception
 {
-    public SyntaxException(string message, IPosition position) : base(ParseMessage(message,position))
+    public SyntaxException(string message, Token token) : base(ParseMessage(message,token))
     {
         
     }
     
-    private static string ParseMessage(string message, IPosition position)
+    private static string ParseMessage(string message, Token token)
     {
-        return $"{message} at position {position}";
+        return $"{message} given value {token} at position {token.Position}";
     }
 }

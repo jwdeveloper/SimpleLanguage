@@ -66,6 +66,6 @@ public class CharIterator : IIterator<char>
 
     public IPosition Position()
     {
-        return _position;
+        return _position.Clone();
     }
 }

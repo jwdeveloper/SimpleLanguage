@@ -1,9 +1,11 @@
+using System.Linq.Expressions;
 using SL.Core.Api;
 using SL.Core.Api.Exceptions;
 using SL.Core.Common;
 using SL.Core.Parsing.AST;
 using SL.Core.Parsing.AST.Expressions;
 using SL.Core.Parsing.AST.Statements;
+using Expression = SL.Core.Parsing.AST.Expression;
 
 namespace SL.Core.Parsing;
 
@@ -91,7 +93,7 @@ public class Parser
                 return GetExpressionStatement();
         }
 
-        throw new SyntaxException("Unexpected statement", token.Position);
+        throw new SyntaxException("Unexpected statement", token);
     }
 
     private ReturnStatement GetReturnStatement()
@@ -178,7 +180,7 @@ public class Parser
     {
         if (declaration == null)
         {
-            throw new SyntaxException("Foreach must have variable declaration", _tokenIterator.CurrentToken().Position);
+            throw new SyntaxException("Foreach must have variable declaration", _tokenIterator.CurrentToken());
         }
 
         _tokenIterator.NextToken("in");
@@ -297,19 +299,21 @@ public class Parser
             var parameterType = _tokenIterator.LookUp().Type == TokenType.OBJECT_TYPE
                 ? _nodeFactory.IdentifierLiteral(_tokenIterator.NextToken(TokenType.OBJECT_TYPE))
                 : null;
-            
+
             var parameterName = GetIdentifier();
 
             var parameter = new ParameterStatement(parameterType, parameterName);
             listParameter.Add(parameter);
-            
+
             if (_tokenIterator.LookUp().Type == TokenType.COMMA)
             {
                 _tokenIterator.NextToken(TokenType.COMMA);
                 continue;
             }
-           break;
+
+            break;
         }
+
         _tokenIterator.NextToken(TokenType.CLOSE_ARGUMENTS);
         return listParameter;
     }
@@ -381,7 +385,7 @@ public class Parser
         if (!(left is IdentifierLiteral))
         {
             throw new SyntaxException($"to assigned type must be of type {TokenType.IDENTIFIER}",
-                _tokenIterator.CurrentToken().Position);
+                _tokenIterator.CurrentToken());
         }
 
         var assigmentToken = _tokenIterator.NextToken(TokenType.ASSIGMENT, TokenType.COMPLEX_ASSIGMENT);
@@ -423,9 +427,59 @@ public class Parser
         {
             case TokenType.OPEN_ARGUMETNS:
                 return GetParentesisExpression();
+            case TokenType.IDENTIFIER:
+                return GetIdentifierExpression();
             default:
                 return GetLiteral();
         }
+    }
+
+
+    private Expression GetIdentifierExpression()
+    {
+        var token = _tokenIterator.NextToken(TokenType.IDENTIFIER);
+        var identifier = _nodeFactory.IdentifierLiteral(token);
+        if (_tokenIterator.LookUp().Type != TokenType.OPEN_ARGUMETNS)
+        {
+            return identifier;
+        }
+
+        return GetFunctionCall(identifier);
+    }
+
+
+    private Expression GetFunctionCall(IdentifierLiteral identifierLiteral)
+    {
+        var parameters = GetFunctionCallParameters();
+
+        if (_tokenIterator.LookUp().Type == TokenType.DOT)
+        {
+            _tokenIterator.NextToken(TokenType.DOT);
+            return _nodeFactory.FunctionCallExpression(identifierLiteral, parameters, GetIdentifierExpression());
+        }
+
+
+        return _nodeFactory.FunctionCallExpression(identifierLiteral, parameters, null);
+    }
+
+
+    private List<Expression> GetFunctionCallParameters()
+    {
+        var expressions = new List<Expression>();
+        _tokenIterator.NextToken(TokenType.OPEN_ARGUMETNS);
+        if (_tokenIterator.LookUp().Type == TokenType.CLOSE_ARGUMENTS)
+        {
+            _tokenIterator.NextToken(TokenType.CLOSE_ARGUMENTS);
+            return expressions;
+        }
+
+        do
+        {
+            expressions.Add(GetExpression());
+        } while (_tokenIterator.LookUp().Type == TokenType.COMMA && _tokenIterator.NextToken(TokenType.COMMA) != null);
+
+        _tokenIterator.NextToken(TokenType.CLOSE_ARGUMENTS);
+        return expressions;
     }
 
     /*
@@ -445,7 +499,7 @@ public class Parser
     {
         if (_tokenIterator.LookUp().Type != TokenType.IDENTIFIER)
         {
-            throw new SyntaxException("Expected identifer", _tokenIterator.LookUp().Position);
+            throw new SyntaxException("Expected identifer", _tokenIterator.LookUp());
         }
 
         var token = _tokenIterator.NextToken();
@@ -467,10 +521,8 @@ public class Parser
                 return _nodeFactory.LiteralString(token);
             case TokenType.NUMBER:
                 return _nodeFactory.LiteralNumber(token);
-            case TokenType.IDENTIFIER:
-                return _nodeFactory.IdentifierLiteral(token);
         }
 
-        throw new SyntaxException("Unexpected literal", token.Position);
+        throw new SyntaxException("Unexpected literal", token);
     }
 }
