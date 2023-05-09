@@ -86,8 +86,18 @@ public class EvaluatorFactory
                 if (args.Length == 1)
                 {
                     var list = new List<object>();
-                    var to = (float)args[0];
-                    for (var i = 0; i <= to; i++)
+
+                    float to = -1;
+                    if (args[0] is float floatValue)
+                    {
+                        to = floatValue;
+                    }
+                    if (args[0] is ProgramVariable programVariable)
+                    {
+                        to = (float)programVariable.value;
+                    }
+                   
+                    for (var i = 0; i < to; i++)
                     {
                         list.Add(i);
                     }
