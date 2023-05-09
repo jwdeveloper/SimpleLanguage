@@ -8,7 +8,9 @@ public class IfStatement : Statement
 
     public Statement Body { get; }
 
-    public Statement ElseBody { get; }
+    public Statement? ElseBody { get; }
+
+    public bool HasElseBody => ElseBody != null;
     
     public IfStatement(Expression condition, Statement body, Statement elseBody)
     {

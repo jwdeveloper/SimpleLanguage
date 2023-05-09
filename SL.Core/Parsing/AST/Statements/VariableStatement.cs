@@ -6,18 +6,18 @@ namespace SL.Core.Parsing.AST;
 public class VariableStatement : Statement
 {
     private readonly Token _variableTypeToken;
-    private readonly List<VariableDeclarationStatement> _variableDeclarations;
+    public List<VariableDeclarationStatement> VariableDeclarations { get; }
     public string VariableType => _variableTypeToken.Value;
     
     public VariableStatement(Token variableTypeToken, List<VariableDeclarationStatement> variableDeclarations)
     {
         _variableTypeToken = variableTypeToken;
-        _variableDeclarations = variableDeclarations;
+        VariableDeclarations = variableDeclarations;
     }
 
     public override IEnumerable<Node> Children()
     {
-        return _variableDeclarations;
+        return VariableDeclarations;
     }
     
     public override dynamic GetModel()
@@ -26,7 +26,7 @@ public class VariableStatement : Statement
         model.name = Name();
         model.variableType =VariableType;
         var parametersModel = new List<dynamic>();
-        foreach(var paramerter in _variableDeclarations)
+        foreach(var paramerter in VariableDeclarations)
         {
             parametersModel.Add(paramerter.GetModel());
         }

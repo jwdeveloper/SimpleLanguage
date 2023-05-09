@@ -15,7 +15,7 @@ public class ForStatementTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<ForStatement>(0, assertion =>
             {
                
@@ -32,7 +32,7 @@ public class ForStatementTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<ForStatement>(0, assertion =>
             {
                
@@ -49,7 +49,7 @@ public class ForStatementTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<ForeachStatement>(0, assertion =>
             {
              

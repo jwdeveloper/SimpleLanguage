@@ -16,7 +16,7 @@ public class AssigmentTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<ExpresionStatement>(0, assertion =>
             {
                 assertion.HasChild<AssigmentExpression>(0, nodeAssertion =>
@@ -42,7 +42,7 @@ public class AssigmentTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<ExpresionStatement>(0, assertion =>
             {
                 assertion.HasChild<AssigmentExpression>(0, nodeAssertion =>
@@ -68,7 +68,7 @@ public class AssigmentTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<ExpresionStatement>(0, assertion =>
             {
                 assertion.HasChild<AssigmentExpression>(0, nodeAssertion =>

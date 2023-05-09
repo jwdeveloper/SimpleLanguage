@@ -17,7 +17,7 @@ public class ExpresionsTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<ExpresionStatement>(0, assertion =>
             {
                 assertion.HasChild<BinaryExpression>(0, nodeAssertion =>
@@ -42,7 +42,7 @@ public class ExpresionsTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<ExpresionStatement>(0, assertion =>
             {
                 assertion.HasChild<BinaryExpression>(0, nodeAssertion =>
@@ -67,7 +67,7 @@ public class ExpresionsTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<ExpresionStatement>(0, assertion =>
             {
                 assertion.HasChild<BinaryExpression>(0, nodeAssertion =>
@@ -84,7 +84,7 @@ public class ExpresionsTests : ParserTestBase
     
     
     [DatapointSource]
-    public string[] values = new[] { "==", "is", "!=", "not", ">", ">=", "<", "<=" };
+    public string[] values = new[] { "==", "is", "!=",  ">", ">=", "<", "<=" };
     
     [Theory]
     public async Task EqualExpression(string operator_)
@@ -96,7 +96,7 @@ public class ExpresionsTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<ExpresionStatement>(0, assertion =>
             {
                 assertion.HasChild<BinaryExpression>(0, nodeAssertion =>

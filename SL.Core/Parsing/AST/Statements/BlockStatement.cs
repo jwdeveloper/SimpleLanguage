@@ -2,18 +2,20 @@ namespace SL.Core.Parsing.AST;
 
 public class BlockStatement : Statement
 {
-   private readonly List<Statement> _statements;
+   public  List<Statement> Statements { get; }
    private readonly string _name;
 
    public BlockStatement(List<Statement> statements, string name)
    {
-      _statements = statements;
+      this.Statements = statements;
       _name = name == string.Empty ? GetType().Name : name;
    }
 
+   
+   
    public override IEnumerable<Node> Children()
    {
-      return _statements;
+      return Statements;
    }
    public override string Name()
    {

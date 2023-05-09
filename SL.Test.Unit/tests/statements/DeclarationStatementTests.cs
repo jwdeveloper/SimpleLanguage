@@ -15,7 +15,7 @@ public class DeclarationStatement : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program);
+        NodeAssert.Assert<SlProgram>(program);
     }
     
     [Test]
@@ -28,7 +28,7 @@ public class DeclarationStatement : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program);
+        NodeAssert.Assert<SlProgram>(program);
     }
     
     [Test]
@@ -42,6 +42,6 @@ public class DeclarationStatement : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program);
+        NodeAssert.Assert<SlProgram>(program);
     }
 }

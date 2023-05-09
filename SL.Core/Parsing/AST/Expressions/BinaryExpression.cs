@@ -22,9 +22,9 @@ public class BinaryExpression : Expression
     {
         dynamic model = new ExpandoObject();
         model.name = Name();
-        model.left =Left;
+        model.left =Left.GetModel();
         model.operatioin =Operator;
-        model.right =Right;
+        model.right =Right.GetModel();
         return model;
     }
 }

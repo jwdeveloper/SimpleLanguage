@@ -15,7 +15,7 @@ public class BlockStatementTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChildrenCount(1)
             .HasChild<BlockStatement>(0,
                 e =>
@@ -36,7 +36,7 @@ public class BlockStatementTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChildrenCount(3)
             .HasChild<EmptyStatement>(0)
             .HasChild<EmptyStatement>(1)

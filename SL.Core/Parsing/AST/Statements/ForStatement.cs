@@ -4,25 +4,27 @@ namespace SL.Core.Parsing.AST;
 
 public class ForStatement : Statement
 {
-    VariableStatement? declaration;
-    Expression? condition;
-    Expression? assigment;
-    Statement body;
-    private bool isForeach;
+    public VariableStatement? Declaration { get; }
+    public Expression? Condition { get; }
+    public Expression? Assigment { get; }
+    public Statement Body { get; }
 
+    public bool HasDeclaration => Declaration != null;
+    public bool HasCondition => Condition != null;
+    public bool HasAssigment => Assigment != null;
 
     public ForStatement(
         VariableStatement declaration,
         Expression condition, 
         Expression assigment,
-        Statement body, 
-        bool isForeach)
+        Statement body) 
+     
     {
-        this.declaration = declaration;
-        this.condition = condition;
-        this.assigment = assigment;
-        this.body = body;
-        this.isForeach = isForeach;
+        this.Declaration = declaration;
+        this.Condition = condition;
+        this.Assigment = assigment;
+        this.Body = body;
+        
     }
 
 
@@ -31,10 +33,10 @@ public class ForStatement : Statement
     {
         dynamic model = new ExpandoObject();
         model.name = Name();
-        model.declaration = declaration?.GetModel();
-        model.iterator = condition?.GetModel();
-        model.assigment = assigment?.GetModel();
-        model.body = body.GetModel();
+        model.declaration = Declaration?.GetModel();
+        model.iterator = Condition?.GetModel();
+        model.assigment = Assigment?.GetModel();
+        model.body = Body.GetModel();
         return model;
     }
 

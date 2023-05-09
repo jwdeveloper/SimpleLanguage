@@ -50,7 +50,7 @@ public class ParserTest : ParserTestBase
         {
             var program = await CreateProgram(content);
             var model = program.ToJson();
-            NodeAssert.Assert<Program>(program);
+            NodeAssert.Assert<SlProgram>(program);
         });
     }
    

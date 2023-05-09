@@ -85,6 +85,13 @@ public class TokenIterator : AbstractIterator<Token>, ITokenIterator
         return true;
     }
 
+    public List<Token> ToList()
+    {
+       return _target;
+    }
+
+ 
+
     private Token ValiateToken(Token token)
     {
         if (_ctx.IsCancellationRequested)

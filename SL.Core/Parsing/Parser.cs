@@ -21,17 +21,17 @@ public class Parser
         _tokenIterator = null;
     }
 
-    public Program Parse(ITokenIterator tokenIterator)
+    public SlProgram Parse(ITokenIterator tokenIterator)
     {
         _tokenIterator = tokenIterator;
         return GetProgram();
     }
 
 
-    private Program GetProgram()
+    private SlProgram GetProgram()
     {
         var statements = GetStatementList(TokenType.END_OF_FILE);
-        return new Program(statements);
+        return new SlProgram(statements);
     }
 
 
@@ -173,7 +173,7 @@ public class Parser
         _tokenIterator.NextToken(TokenType.CLOSE_ARGUMENTS);
 
         var body = GetStatement();
-        return _nodeFactory.ForStatement(declaration, condition, assigment, body, false);
+        return _nodeFactory.ForStatement(declaration, condition, assigment, body);
     }
 
     private ForeachStatement GetForeachStatement(VariableStatement declaration)
@@ -342,7 +342,7 @@ public class Parser
 
     private Expression GetLogicalExpression()
     {
-        return GetGenericExpression(TokenType.EQUALITY_OPREATOR, GetEqualityExpression);
+        return GetGenericExpression(TokenType.LOGICAL_OPERATOR, GetEqualityExpression);
     }
 
     private Expression GetEqualityExpression()

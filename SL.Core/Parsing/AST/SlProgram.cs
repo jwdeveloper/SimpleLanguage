@@ -3,9 +3,9 @@ using System.Text.Json;
 
 namespace SL.Core.Parsing.AST;
 
-public class Program : BlockStatement
+public class SlProgram : BlockStatement
 {
-    public Program(List<Statement> statements) : base(statements, "Program")
+    public SlProgram(List<Statement> statements) : base(statements, "Program")
     {
         
     }

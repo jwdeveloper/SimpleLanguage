@@ -6,13 +6,17 @@ namespace SL.Core.Parsing.AST;
 public class VariableDeclarationStatement : Statement
 {
     public IdentifierLiteral IdentifierLiteral { get; }
-    public Expression AssigmentExpression{ get; }
+    public Expression? AssigmentExpression{ get; }
 
-    public VariableDeclarationStatement(IdentifierLiteral identifierLiteral, Expression assigmentExpression)
+    public VariableDeclarationStatement(IdentifierLiteral identifierLiteral, Expression? assigmentExpression)
     {
         IdentifierLiteral = identifierLiteral;
         AssigmentExpression = assigmentExpression;
     }
+
+    public bool HasAssigmentExpression => AssigmentExpression != null;
+
+    public string GetVariableDeclarationName => (string)IdentifierLiteral.Value;
     
     
     public override dynamic GetModel()

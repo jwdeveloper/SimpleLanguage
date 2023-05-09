@@ -15,7 +15,7 @@ public class LiteralsTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChildrenCount(4)
             .HasChild<ExpresionStatement>(0,
                 e =>

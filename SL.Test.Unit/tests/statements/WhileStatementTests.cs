@@ -16,7 +16,7 @@ public class WhileStatementTests  : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<WhileStatement>(0, assertion =>
             {
                 assertion.Has(e =>
@@ -39,7 +39,7 @@ public class WhileStatementTests  : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<WhileStatement>(0, assertion =>
             {
                 assertion.Has(e =>

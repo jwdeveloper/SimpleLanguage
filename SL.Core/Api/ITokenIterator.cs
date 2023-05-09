@@ -19,4 +19,5 @@ public interface ITokenIterator
     public Token LookUp(TokenType value);
 
     public bool IsValid();
+    public List<Token> ToList();
 }

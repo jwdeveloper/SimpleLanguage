@@ -2,9 +2,9 @@ namespace SL.Core.Common;
 
 public class AbstractIterator<T>
 {
-    private readonly List<T> _target;
+    protected readonly List<T> _target;
+    protected T _defaultValue;
     private T? _current;
-    private T _defaultValue;
     private int _position;
 
     public AbstractIterator(List<T> target, T defaultValue)

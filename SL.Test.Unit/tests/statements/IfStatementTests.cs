@@ -15,7 +15,7 @@ public class IfStatementTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<IfStatement>(0, assertion =>
             {
                 assertion.Has(e =>
@@ -37,7 +37,7 @@ public class IfStatementTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<IfStatement>(0, assertion =>
             {
                 assertion.Has(e =>
@@ -59,7 +59,7 @@ public class IfStatementTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<IfStatement>(0, assertion =>
             {
                 assertion.Has(e =>

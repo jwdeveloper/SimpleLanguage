@@ -3,16 +3,16 @@ namespace SL.Core.Parsing.AST.Expressions;
 public class ExpresionStatement : Statement
 {
 
-    private readonly Expression _expression;
+    public Expression Expression { get; }
 
     public ExpresionStatement(Expression expression)
     {
-      _expression = expression;
+      Expression = expression;
     }
 
 
     public override IEnumerable<Node> Children()
     {
-        return  new[] { _expression };
+        return  new[] { Expression };
     }
 }

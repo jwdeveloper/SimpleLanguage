@@ -5,10 +5,10 @@ namespace SL.Core.Parsing.AST;
 
 public class ParameterStatement : Node
 {
-    private IdentifierLiteral paramterType;
+    public IdentifierLiteral? paramterType { get; }
+    public IdentifierLiteral parameterName { get; }
 
-    private IdentifierLiteral parameterName;
-
+    public bool HasParameterType => paramterType != null;
 
     public ParameterStatement(IdentifierLiteral paramterType, IdentifierLiteral parameterName)
     {

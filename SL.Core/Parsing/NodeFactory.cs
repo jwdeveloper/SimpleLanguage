@@ -70,10 +70,9 @@ public class NodeFactory
         VariableStatement declaration,
         Expression condition,
         Expression assigment,
-        Statement body,
-        bool isForeach)
+        Statement body)
     {
-        return new ForStatement(declaration, condition, assigment, body, isForeach);
+        return new ForStatement(declaration, condition, assigment, body);
     }
 
     public ForeachStatement ForeachStatement(

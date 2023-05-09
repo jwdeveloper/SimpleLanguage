@@ -15,14 +15,14 @@ public class FunctionCallTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<ExpresionStatement>(0, assertion =>
             {
                 assertion.HasChild<FunctionCallExpression>(0, e =>
                 {
                     e.Has(e =>
                     {
-                        Assert.That(e.FunctionName.Value, Is.EqualTo("getAge"));
+                        Assert.That(e.FunctionName, Is.EquivalentTo("getAge"));
                         Assert.That(e.Paramteters.Count, Is.EqualTo(0));
                         Assert.That(e.NextCall, Is.EqualTo(null));
                     });
@@ -41,14 +41,14 @@ public class FunctionCallTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<ExpresionStatement>(0, assertion =>
             {
                 assertion.HasChild<FunctionCallExpression>(0, e =>
                 {
                     e.Has(e =>
                     {
-                        Assert.That(e.FunctionName.Value, Is.EqualTo("getAge"));
+                        Assert.That(e.FunctionName, Is.EquivalentTo("getAge"));
                         Assert.That(e.Paramteters.Count, Is.EqualTo(4));
                         Assert.That(e.NextCall, Is.EqualTo(null));
                     });
@@ -67,7 +67,7 @@ public class FunctionCallTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<VariableStatement>(0,
                 assertion =>
                 {
@@ -90,18 +90,18 @@ public class FunctionCallTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<ExpresionStatement>(0, assertion =>
             {
                 assertion.HasChild<FunctionCallExpression>(0, e =>
                 {
                     e.Has(e =>
                     {
-                        Assert.That(e.FunctionName.Value, Is.EqualTo("getAge"));
+                        Assert.That(e.FunctionName, Is.EquivalentTo("getAge"));
                         Assert.That(e.Paramteters.Count, Is.EqualTo(1));
                         NodeAssert.Assert<FunctionCallExpression>(e.NextCall).Has(expression =>
                         {
-                            Assert.That(expression.FunctionName.Value, Is.EqualTo("getName"));
+                            Assert.That(expression.FunctionName, Is.EquivalentTo("getName"));
                             Assert.That(expression.Paramteters.Count, Is.EqualTo(1));
                         });
                     });
@@ -119,14 +119,14 @@ public class FunctionCallTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<ExpresionStatement>(0, assertion =>
             {
                 assertion.HasChild<FunctionCallExpression>(0, e =>
                 {
                     e.Has(e =>
                     {
-                        Assert.That(e.FunctionName.Value, Is.EqualTo("getAge"));
+                        Assert.That(e.FunctionName, Is.EquivalentTo("getAge"));
                         Assert.That(e.Paramteters.Count, Is.EqualTo(1));
                         NodeAssert.Assert<IdentifierLiteral>(e.NextCall).Has(expression =>
                         {

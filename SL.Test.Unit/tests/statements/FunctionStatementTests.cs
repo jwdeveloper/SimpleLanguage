@@ -17,7 +17,7 @@ public class FunctionStatementTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<FunctionDeclarationStatement>(0);
     }
     
@@ -31,7 +31,7 @@ public class FunctionStatementTests : ParserTestBase
         var program = await CreateProgram(content);
 
         //Assert
-        NodeAssert.Assert<Program>(program)
+        NodeAssert.Assert<SlProgram>(program)
             .HasChild<FunctionDeclarationStatement>(0);
     }
 
