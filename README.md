@@ -1,6 +1,6 @@
 # SL - SimpleLang
 
-The goal of this project is to learn how does programming languages works under the hood.
+The goal of this project is to learn how an programming languages works under the hood.
 
 
 [Download and try it](https://github.com/jwdeveloper/SimpleLanguage/releases/latest/download/SimpleLangGui.exe)
