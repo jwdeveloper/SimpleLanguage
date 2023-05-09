@@ -2,7 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using SL.Parser.Parsing.AST;
 
-namespace SL.Test.Unit;
+namespace SL.Test.Unit.Parser;
 
 public class ParserTest : ParserTestBase
 {

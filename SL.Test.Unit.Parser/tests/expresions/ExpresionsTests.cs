@@ -2,7 +2,7 @@ using SL.Parser.Parsing.AST;
 using SL.Parser.Parsing.AST.Expressions;
 
 
-namespace SL.Test.Unit.expresions;
+namespace SL.Test.Unit.Parser.expresions;
 
 public class ExpresionsTests : ParserTestBase
 {

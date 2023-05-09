@@ -18,7 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\SL.Interpreter\SL.Interpreter.csproj" />
-      <ProjectReference Include="..\SL.Test.Unit\SL.Test.Unit.csproj" />
+      <ProjectReference Include="..\SL.Test.Unit.Parser\SL.Test.Unit.Parser.csproj" />
     </ItemGroup>
 
 </Project>

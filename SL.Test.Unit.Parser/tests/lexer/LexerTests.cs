@@ -3,7 +3,7 @@ using SL.Parser.Common;
 using SL.Parser.Lexing;
 using SL.Parser.Lexing.Handlers;
 
-namespace SL.Test.Unit;
+namespace SL.Test.Unit.Parser;
 
 public class LexerTests : ParserTestBase
 {

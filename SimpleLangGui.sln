@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F30497BF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SL.Parser", "SL.Parser\SL.Parser.csproj", "{4D5E1D76-9856-484B-BED0-AF0B45D22F4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SL.Test.Unit", "SL.Test.Unit\SL.Test.Unit.csproj", "{24402885-F756-4B85-96D2-6F49D0448AAF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SL.Test.Unit.Parser", "SL.Test.Unit.Parser\SL.Test.Unit.Parser.csproj", "{24402885-F756-4B85-96D2-6F49D0448AAF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SL.Interpreter", "SL.Interpreter\SL.Interpreter.csproj", "{E1F05354-92E0-4284-BB25-03E0A26A8373}"
 EndProject

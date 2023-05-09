@@ -1,7 +1,7 @@
 using SL.Parser.Parsing.AST;
 using SL.Parser.Parsing.AST.Expressions;
 
-namespace SL.Test.Unit;
+namespace SL.Test.Unit.Parser;
 
 public class IfStatementTests : ParserTestBase
 {

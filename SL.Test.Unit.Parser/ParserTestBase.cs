@@ -2,11 +2,11 @@ using SL.Parser;
 using SL.Parser.Lexing;
 using SL.Parser.Parsing.AST;
 
-namespace SL.Test.Unit;
+namespace SL.Test.Unit.Parser;
 
 public class ParserTestBase
 {
-    public Parser.Parsing.Parser CreateParser()
+    public SL.Parser.Parsing.Parser CreateParser()
     {
         return ParserFactory.CreateParser();
     }

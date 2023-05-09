@@ -1,6 +1,6 @@
 using SL.Parser.Parsing.AST;
 
-namespace SL.Test.Unit;
+namespace SL.Test.Unit.Parser;
 
 public class NodeAssertion<T> where T : class
 {
