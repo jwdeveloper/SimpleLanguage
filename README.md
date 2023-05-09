@@ -3,7 +3,7 @@
 The goal of this project is to learn how an programming languages works under the hood.
 
 
-[Download and try it](https://github.com/jwdeveloper/SimpleLanguage/releases/latest/download/SimpleLangGui.exe)
+[Download and try it](https://github.com/jwdeveloper/SimpleLanguage/releases/latest/download/SL_3_0_0.zip)
 
 # SL Grammar
 [Grammar documentation](https://github.com/jwdeveloper/SimpleLanguage/blob/master/SL.Application/gramma.md)
