@@ -5,6 +5,12 @@ The goal of this project is to learn how an programming languages works under th
 
 [Download and try it](https://github.com/jwdeveloper/SimpleLanguage/releases/latest/download/SL_3_0_0.zip)
 
+
+### Application shortcuts 
+`Ctrl + D` Disable/Enable autocompiler
+
+`Ctrl + S` Compile code
+
 # SL Grammar
 [Grammar documentation](https://github.com/jwdeveloper/SimpleLanguage/blob/master/SL.Application/gramma.md)
 
