@@ -166,6 +166,23 @@ Example
    }
 ```
 
+
+## Foreach statement
+
+```
+   for( (variable_declaration) in (list))
+    (body)
+```
+
+example
+
+```
+   for(var i in range(0,10))
+   {
+     print(i);
+   } 
+```
+
 ## While statement
 
 ```

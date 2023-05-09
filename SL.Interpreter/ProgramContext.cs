@@ -161,6 +161,11 @@ public class ProgramContext
     
     public bool IsValueMatchType(string type, object value)
     {
+        if (value is ProgramVariable variable)
+        {
+            return IsValueMatchType(type, variable.value);
+        }
+        
         if (type == "number" )
         {
             return  value is float;
@@ -173,6 +178,11 @@ public class ProgramContext
         {
             return value is string;
         }
+        if (type == "list")
+        {
+            return value is List<object>;
+        }
+        
         if (type == "null")
         {
             return value is null;

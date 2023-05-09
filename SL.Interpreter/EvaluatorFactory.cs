@@ -26,6 +26,7 @@ public class EvaluatorFactory
             .WithInterpreter<IfStatement, IfBlockInterpreter>()
             .WithInterpreter<WhileStatement, WhileBlockInterpeter>()
             .WithInterpreter<ForStatement, ForBlockInterpreter>()
+            .WithInterpreter<ForeachStatement,ForeachBlockInterpreter>()
             .WithInterpreter<FunctionDeclarationStatement, FunctionStatementInterpreter>()
             .WithInterpreter<BlockStatement,BlockInterpreter>()
             .WithInterpreter<EmptyStatement>((_, _, _) => Task.FromResult<object>(true))
@@ -79,6 +80,50 @@ public class EvaluatorFactory
                 
                 Thread.Sleep((int)seconds);
                 return true;
+            })
+            .WithSystemFunction("range", "list", async (args, program) =>
+            {
+                if (args.Length == 1)
+                {
+                    var list = new List<object>();
+                    var to = (float)args[0];
+                    for (var i = 0; i <= to; i++)
+                    {
+                        list.Add(i);
+                    }
+                    return new ProgramVariable
+                    {
+                        type = "list",
+                        value = list,
+                        name = Guid.NewGuid().ToString()
+                    };
+                }
+                if (args.Length == 1)
+                {
+                    var list = new List<object>();
+                    var from = (float)args[0];
+                    var to = (float) args[1];
+                    for (var i = from; i <= to; i++)
+                    {
+                        list.Add(i);
+                    }
+                    return new ProgramVariable
+                    {
+                        type = "list",
+                        value = list,
+                        name = Guid.NewGuid().ToString()
+                    };
+                }
+                throw new Exception("Bad number of arguments");
+            })
+            .WithSystemFunction("list", "list", async (args, program) =>
+            {
+                return new ProgramVariable
+                {
+                    type = "list",
+                    value = new List<object>(),
+                    name = Guid.NewGuid().ToString()
+                };
             })
             .Build();
     }

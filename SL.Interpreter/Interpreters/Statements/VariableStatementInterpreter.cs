@@ -58,7 +58,7 @@ public class VariableStatementInterpreter : IInterpreter<VariableStatement>
             variable.value = assigmentValue;
             program.CreateVariable(variable);
         }
-        return true;
+        return varaibles;
     }
 
 
