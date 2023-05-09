@@ -1,4 +1,4 @@
-using SL.Core.Parsing.AST;
+using SL.Parser.Parsing.AST;
 
 namespace SL.Interpreter.Interpreters;
 

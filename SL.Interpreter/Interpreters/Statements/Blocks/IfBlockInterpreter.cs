@@ -1,4 +1,4 @@
-using SL.Core.Parsing.AST;
+using SL.Parser.Parsing.AST;
 
 namespace SL.Interpreter.Interpreters;
 
@@ -15,13 +15,13 @@ public class IfBlockInterpreter : IInterpreter<IfStatement>
         var conditionValue = program.GetBoolValue(conditionResult);
         if (conditionValue)
         {
-            await factory.InterpreterNode(node.Body);
+           return await factory.InterpreterNode(node.Body);
         }
         else if (node.HasElseBody)
         {
-            await factory.InterpreterNode(node.ElseBody);
+            return await factory.InterpreterNode(node.ElseBody);
         }
 
-        return true;
+        return null;
     }
 }

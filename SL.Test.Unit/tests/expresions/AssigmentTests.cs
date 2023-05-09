@@ -1,6 +1,6 @@
-using SL.Core.Api.Exceptions;
-using SL.Core.Parsing.AST;
-using SL.Core.Parsing.AST.Expressions;
+using SL.Parser.Api.Exceptions;
+using SL.Parser.Parsing.AST;
+using SL.Parser.Parsing.AST.Expressions;
 
 namespace SL.Test.Unit.expresions;
 

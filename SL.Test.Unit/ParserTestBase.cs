@@ -1,15 +1,12 @@
-using SL.Core;
-using SL.Core.Common;
-using SL.Core.Lexing;
-using SL.Core.Lexing.Handlers;
-using SL.Core.Parsing;
-using SL.Core.Parsing.AST;
+using SL.Parser;
+using SL.Parser.Lexing;
+using SL.Parser.Parsing.AST;
 
 namespace SL.Test.Unit;
 
 public class ParserTestBase
 {
-    public Parser CreateParser()
+    public Parser.Parsing.Parser CreateParser()
     {
         return ParserFactory.CreateParser();
     }

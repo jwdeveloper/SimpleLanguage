@@ -1,6 +1,6 @@
 using System.Reflection;
-using SL.Core.Parsing.AST;
-using SL.Core.Parsing.AST.Expressions;
+using SL.Parser.Parsing.AST;
+using SL.Parser.Parsing.AST.Expressions;
 using SL.Interpreter.Interpreters;
 using SL.Interpreter.Interpreters.Expressions;
 

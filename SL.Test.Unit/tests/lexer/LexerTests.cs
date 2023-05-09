@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
-using SL.Core.Common;
-using SL.Core.Lexing;
-using SL.Core.Lexing.Handlers;
+using SL.Parser.Common;
+using SL.Parser.Lexing;
+using SL.Parser.Lexing.Handlers;
 
 namespace SL.Test.Unit;
 

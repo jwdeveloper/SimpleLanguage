@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SL.Core\SL.Core.csproj" />
+      <ProjectReference Include="..\SL.Parser\SL.Parser.csproj" />
     </ItemGroup>
 
 </Project>

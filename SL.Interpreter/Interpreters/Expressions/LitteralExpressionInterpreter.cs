@@ -1,4 +1,4 @@
-using SL.Core.Parsing.AST.Expressions;
+using SL.Parser.Parsing.AST.Expressions;
 
 namespace SL.Interpreter.Interpreters.Expressions;
 

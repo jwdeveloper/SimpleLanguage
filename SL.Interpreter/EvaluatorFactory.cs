@@ -1,8 +1,9 @@
 using System.Text;
-using SL.Core.Parsing.AST;
-using SL.Core.Parsing.AST.Expressions;
+using SL.Parser.Parsing.AST;
+using SL.Parser.Parsing.AST.Expressions;
 using SL.Interpreter.Interpreters;
 using SL.Interpreter.Interpreters.Expressions;
+using SL.Parser.Parsing.AST.Statements;
 
 namespace SL.Interpreter;
 
@@ -17,27 +18,21 @@ public class EvaluatorFactory
                 {
                     await factory.InterpreterNode(statement);
                 }
-
                 return true;
             })
+            //Statements
             .WithInterpreter<Statement, StatementInterpreter>()
             .WithInterpreter<VariableStatement, VariableStatementInterpreter>()
             .WithInterpreter<IfStatement, IfBlockInterpreter>()
             .WithInterpreter<WhileStatement, WhileBlockInterpeter>()
             .WithInterpreter<ForStatement, ForBlockInterpreter>()
             .WithInterpreter<FunctionDeclarationStatement, FunctionStatementInterpreter>()
-            .WithInterpreter<BlockStatement>(async (block, program, factory) =>
-            {
-                foreach (var statement in block.Statements)
-                {
-                    await factory.InterpreterNode(statement);
-                }
-
-                return true;
-            })
-            .WithInterpreter<EmptyStatement>((statement, program, factory) => Task.FromResult<object>(true))
-            .WithInterpreter<ExpresionStatement>(async (statement, program, factory) =>
-                await factory.InterpreterNode(statement.Expression))
+            .WithInterpreter<BlockStatement,BlockInterpreter>()
+            .WithInterpreter<EmptyStatement>((_, _, _) => Task.FromResult<object>(true))
+            .WithInterpreter<ExpresionStatement, ExpresionStatementInterpreter>()
+            .WithInterpreter<ReturnStatement, ReturnInterpreter>()
+            
+            //Expressions
             .WithInterpreter<FunctionCallExpression, FunctionCallExpressionInterpreter>()
             .WithInterpreter<BinaryExpression, BinaryExpressionInterpreter>()
             .WithInterpreter<AssigmentExpression, AsigmentExpressionInterpreter>()

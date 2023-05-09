@@ -1,6 +1,6 @@
 function drawLine(number size)
 {
-   var line = " ";
+  var line = " ";
   for(var i =0;i<size;i+=1)
   {
     line = line + "x";
@@ -8,5 +8,4 @@ function drawLine(number size)
     sleep(100);
   }
 }
-
 drawLine(3);

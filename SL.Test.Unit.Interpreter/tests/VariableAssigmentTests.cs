@@ -1,5 +1,6 @@
-using SL.Core.Api.Exceptions;
-using SL.Core.Parsing.AST;
+
+
+using SL.Parser.Api.Exceptions;
 
 namespace SL.Test.Unit.Interpreter.tests;
 

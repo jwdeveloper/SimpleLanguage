@@ -13,6 +13,8 @@ public class ProgramContext
     private readonly List<string> _progamTypes;
     public Action<List<string>> onConsoleUpdate { get; set; }
 
+    private readonly Stack<ProgramVariable> _variablesStack;
+
 
     public ProgramContext(CancellationToken cancellationToken)
     {
@@ -21,6 +23,7 @@ public class ProgramContext
         Functions = new Dictionary<string, ProgramFunction>();
         Console = new List<string>();
         _progamTypes = new List<string>();
+        _variablesStack = new Stack<ProgramVariable>();
     }
 
     public bool IsCancelRequested => CANCELLATION_TOKEN.IsCancellationRequested;
@@ -48,7 +51,18 @@ public class ProgramContext
             throw new Exception($"Function {programFunction.Name} already declared");
         }
         Functions.Add(programFunction.Name, programFunction);
+    
         return true;
+    }
+    
+    public ProgramFunction GetFunction(string name)
+    {
+        if (!IsFunctionExists(name))
+        {
+            throw new Exception($"Function {name} is not declared");
+        }
+
+        return Functions[name];
     }
 
     public async Task<object> InvokeFunction(string functionName, params object[] param)
@@ -89,13 +103,18 @@ public class ProgramContext
         CreateVariable(new ProgramVariable() { type = type, name = name, value = value });
     }
     
-    public void RemoveVariable(string name)
+    public void RemoveVariable(int count= 1)
     {
-        if (!IsVariableExists(name))
+        while (count > 0)
         {
-            throw new Exception($"Variable not declared  {name}");
+           var variable = _variablesStack.Pop();
+           if (variable == null)
+           {
+               break;
+           }
+           Variables.Remove(variable.name);
+           count--;
         }
-        Variables.Remove(name);
     }
     
     public void CreateVariable(ProgramVariable programVariable)
@@ -105,6 +124,7 @@ public class ProgramContext
             throw new Exception($"Variable already declared {programVariable.name}");
         }
         Variables.Add(programVariable.name, programVariable);
+        _variablesStack.Push(programVariable);
     }
     
     public ProgramVariable GetVariable(string name)
@@ -115,7 +135,29 @@ public class ProgramContext
         }
         return Variables[name];
     }
-    
+
+
+    public string FindObjectType(object value)
+    {
+        if (value is null)
+        {
+            return "null";
+        }
+        
+        if (value is float)
+        {
+            return  "number";
+        }
+        if (value is bool)
+        {
+            return  "bool";
+        }
+        if (value is string)
+        {
+            return  "text";
+        }
+        return "var";
+    }
     
     public bool IsValueMatchType(string type, object value)
     {
@@ -131,11 +173,17 @@ public class ProgramContext
         {
             return value is string;
         }
-
+        if (type == "null")
+        {
+            return value is null;
+        }
+        
         if (type == "var")
         {
             return true;
         }
+        
+        
         
         return false;
     }
