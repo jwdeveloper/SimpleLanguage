@@ -2,6 +2,48 @@
 # Grammar
 
 
+## Variable declaration statement
+
+```
+   (type) (name) [[optional] = (value) ] ;
+```
+
+Example
+
+```
+   var name; 
+   text markName = "mark";
+   number x, y, z = 0;
+   bool isToday = false;
+```
+
+## Function declaration statement
+```
+  function [optional](type) (name) ( (arguments) )
+    (body)
+```
+
+example
+
+```
+  function sayHello()
+  {
+    print("hello");
+  }
+  
+  funtion getAge(age)
+  {
+    return age + 1;
+  }
+
+  funtion number getNumber()
+  {
+    return 23;
+  }
+
+```
+
+
 
 ## Expression
 ```
@@ -48,7 +90,21 @@ example
   i = i ^ 5;
 ```
 
+## Function call expression
+```
+    (functionName) ( (agruments) )
+```
 
+example
+
+```
+   funtion getAge(age)
+   {
+     return age + 1;
+   }
+
+   var age = getAge(34);
+```
 
 ## Body
 ``` 
@@ -66,20 +122,7 @@ Example
 ```
 
 
-## Variable declaration statement
 
-```
-   (type) (name) [[optional] = (value) ] ;
-```
-
-Example
-
-```
-   var name; 
-   text markName = "mark";
-   number x, y, z = 0;
-   bool isToday = false;
-```
 
 
 ## If statement
