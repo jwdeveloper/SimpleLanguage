@@ -16,7 +16,7 @@ public class Evaluator
 
     public ProgramContext ProgramContext => _programContext;
     
-    public async Task ExecuteProgram(SlProgram program, CancellationToken ctx = new CancellationToken())
+    public async Task ExecuteProgram(SlProgram program)
     {
         await _factory.InterpreterNode(program);
     }

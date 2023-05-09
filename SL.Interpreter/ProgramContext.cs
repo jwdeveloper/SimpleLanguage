@@ -26,7 +26,17 @@ public class ProgramContext
         _variablesStack = new Stack<ProgramVariable>();
     }
 
-    public bool IsCancelRequested => CANCELLATION_TOKEN.IsCancellationRequested;
+    public bool IsCancelRequested 
+    {
+        get
+        {
+            if (CANCELLATION_TOKEN.IsCancellationRequested)
+            {
+                throw new Exception("End of program");
+            }
+            return CANCELLATION_TOKEN.IsCancellationRequested;
+        }
+    }
 
     
     public void AddConsoleOutput(string output)

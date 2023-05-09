@@ -8,32 +8,41 @@ namespace SL.Interpreter;
 
 public class InterpreterFactory
 {
-    private readonly ProgramContext ProgramContext;
-    private Dictionary<Type, object> Interpreters;
+    private readonly ProgramContext _programContext;
+    private readonly Dictionary<Type, object> _interpreters;
+    private MethodInfo _methodInfo;
+    private PropertyInfo _propertyInfo;
 
 
     public InterpreterFactory(ProgramContext programContext, Dictionary<Type, object> interpreters)
     {
-        this.ProgramContext = programContext;
-        Interpreters = interpreters;
+        _programContext = programContext;
+        _interpreters = interpreters;
+       
     }
 
-  
+
     public async Task<object> InterpreterNode<T>(T node) where T : Node
     {
         var nodeType = node.GetType();
-        object interpreter = Interpreters[nodeType];
+        object interpreter = _interpreters[nodeType];
 
         if (interpreter == null)
         {
             throw new Exception("Not registered");
         }
-        var method = interpreter.GetType().GetMethod("Interpreter");
+
+        if (_programContext.IsCancelRequested)
+        {
+            return null;
+        }
+
+        _methodInfo = interpreter.GetType().GetMethod("Interpreter");
         
-        var task = (Task)method.Invoke(interpreter, new object []{node, ProgramContext, this});
+        
+        var task = (Task)_methodInfo.Invoke(interpreter, new object[] { node, _programContext, this });
         await task.ConfigureAwait(false);
-        var resultProperty = task.GetType().GetProperty("Result");
-        return resultProperty.GetValue(task);
+        _propertyInfo =  task.GetType().GetProperty("Result");
+        return _propertyInfo.GetValue(task);
     }
-    
 }

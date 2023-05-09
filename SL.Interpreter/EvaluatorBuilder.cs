@@ -7,11 +7,11 @@ public class EvaluatorBuilder
 {
     private Dictionary<Type, object> Interpreters;
     private ProgramContext programContext;
-
-    public EvaluatorBuilder()
+    
+    public EvaluatorBuilder(CancellationToken ctx)
     {
         Interpreters = new Dictionary<Type, object>();
-        programContext = new ProgramContext(new CancellationToken());
+        programContext = new ProgramContext(ctx);
     }
 
 

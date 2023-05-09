@@ -9,9 +9,9 @@ namespace SL.Interpreter;
 
 public class EvaluatorFactory
 {
-    public static Evaluator CreateEvaluator()
+    public static Evaluator CreateEvaluator(CancellationToken  ctx = new CancellationToken())
     {
-        return new EvaluatorBuilder()
+        return new EvaluatorBuilder(ctx)
             .WithInterpreter<SlProgram>(async (program, context, factory) =>
             {
                 foreach (var statement in program.Statements)
@@ -62,12 +62,12 @@ public class EvaluatorFactory
                 }
 
                 program.AddConsoleOutput(messages.ToString());
-                return true;
+                return program.IsCancelRequested;
             })
             .WithSystemFunction("clear", "var", async (args, program) =>
             {
                 program.ClearConsole();
-                return true;
+                return program.IsCancelRequested;
             })
             .WithSystemFunction("sleep", "var", async (args, program) =>
             {
@@ -79,7 +79,7 @@ public class EvaluatorFactory
                 var seconds = (float)args[0];
                 
                 Thread.Sleep((int)seconds);
-                return true;
+                return program.IsCancelRequested;
             })
             .WithSystemFunction("range", "list", async (args, program) =>
             {
