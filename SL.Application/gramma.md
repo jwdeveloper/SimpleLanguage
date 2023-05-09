@@ -1,14 +1,14 @@
 
-## Grammer
+# Grammer
 
 
-# body
+## body
 ``` 
     {
       (statements) 
     } 
  ```
-Example
+### Example
 
 ```
   {
@@ -18,13 +18,13 @@ Example
 ```
 
 
-# variable declaration statement
+## variable declaration statement
 
 ```
    (type) (name) [[optional] = (value) ] ;
 ```
 
-Example
+### Example
 
 ```
    var name; 
@@ -34,7 +34,7 @@ Example
 ```
 
 
-# if statement
+## if statement
 
 ```
    if(expression) 
@@ -43,7 +43,7 @@ Example
       (body)
 ```
 
-Example
+### Example
 ```
   var i =0;
   if(i == 5)
@@ -60,14 +60,14 @@ Example
   }
 ```
 
-# for statement
+## for statement
 
 ```
    for( [optional]variable_declaration ; [optional]expression ; [optional] expression )
      (body)
 ```
 
-Example
+### Example
 ```
    for( var i =0 ; i < 10 ; i += 1 ) 
    {
@@ -75,20 +75,20 @@ Example
    }
 ```
 
-# while statement
+## while statement
 
 ```
    while (expression) 
     (body)
 ```
-or 
+### or 
 ```
    do
     (body) 
    while (expression) 
 ```
 
-Example
+### Example
 ```
    var i =0;
    while(i < 10) 
