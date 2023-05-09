@@ -114,6 +114,17 @@ public class BinaryExpresionTests : InterpreterTestBase
     }
     
     [Test]
+    public async Task ShouldHandleAddVariable()
+    {
+        var interpreter = await ExecuteProgram("var x = 3; var y = x + 3;");
+
+        ProgramAssert.AssertProgram(interpreter)
+            .HasVariable("x", 3)
+            .HasVariable("y", 6);
+    }
+
+    
+    [Test]
     public async Task ShouldHandleMinus()
     {
         var interpreter = await ExecuteProgram("var x = 3 - 3;");
