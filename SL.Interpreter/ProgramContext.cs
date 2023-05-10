@@ -75,6 +75,20 @@ public class ProgramContext
         return Functions[name];
     }
 
+    public object GetVariableValue(object value, string type)
+    {
+        if (value is ProgramVariable programVariable)
+        {
+            return GetVariableValue(programVariable.value, type);
+        }
+
+        if (!IsValueMatchType(type, value))
+        {
+            throw new Exception($"Required type for variable {value} is {type}");
+        }
+        return value;
+    }
+
     public async Task<object> InvokeFunction(string functionName, params object[] param)
     {
         if (!IsFunctionExists(functionName))
@@ -178,7 +192,11 @@ public class ProgramContext
         
         if (type == "number" )
         {
-            return  value is float;
+            if (value is float or int or double)
+            {
+                return true;
+            }
+            return false;
         }
         if (type == "bool")
         {

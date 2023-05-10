@@ -1,4 +1,5 @@
 using SL.Parser.Parsing.AST;
+using SL.Parser.Parsing.AST.Statements;
 
 namespace SL.Interpreter.Interpreters;
 
@@ -15,7 +16,18 @@ public class ForBlockInterpreter : IInterpreter<ForStatement>
         var stackOverflowIterations = 1000;
         while (await GetConditionResult(node, program, factory) &&  !program.IsCancelRequested)
         {
-            await factory.InterpreterNode(node.Body);
+            var result = await factory.InterpreterNode(node.Body);
+            if (result is ProgramReturn returnStatement)
+            {
+                return returnStatement;
+            }
+
+            if (result is BreakOperation)
+            {
+                return null;
+            }
+            
+            
             if (node.HasAssigment)
             {
                 await factory.InterpreterNode(node.Assigment);

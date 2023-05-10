@@ -2,7 +2,7 @@ using System.Dynamic;
 
 namespace SL.Parser.Parsing.AST;
 
-public class IfStatement : Statement
+public class IfBlockStatement : Statement
 {
     public Expression Condition { get; }
 
@@ -12,7 +12,7 @@ public class IfStatement : Statement
 
     public bool HasElseBody => ElseBody != null;
     
-    public IfStatement(Expression condition, Statement body, Statement elseBody)
+    public IfBlockStatement(Expression condition, Statement body, Statement? elseBody)
     {
         Body = body;
         ElseBody = elseBody;

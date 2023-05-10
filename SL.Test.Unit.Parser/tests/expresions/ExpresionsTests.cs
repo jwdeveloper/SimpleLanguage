@@ -14,7 +14,7 @@ public class ExpresionsTests : ParserTestBase
         var content = "(2 + 2) * 4.3;";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
@@ -39,7 +39,7 @@ public class ExpresionsTests : ParserTestBase
         var content = "2 * 2 + 4.3;";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
@@ -64,7 +64,7 @@ public class ExpresionsTests : ParserTestBase
         var content = "2 + 2 * 4.3;";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
@@ -93,7 +93,7 @@ public class ExpresionsTests : ParserTestBase
         var content = $"2 {operator_} 2;";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)

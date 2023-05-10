@@ -21,6 +21,7 @@ public class BinaryExpressionInterpreter : IInterpreter<BinaryExpression>
                 {
                     return HandleStringOperation(left, right, (a, b) => a + b);
                 }
+
                 return HandleNumericOperation(left, right, (a, b) => a + b);
             case "-":
                 return HandleNumericOperation(left, right, (a, b) => a - b);
@@ -38,6 +39,9 @@ public class BinaryExpressionInterpreter : IInterpreter<BinaryExpression>
                 return HandleNumericOperation(left, right, (a, b) => a < b);
             case "<=":
                 return HandleNumericOperation(left, right, (a, b) => a <= b);
+            case "%":
+            case "mod":
+                return HandleNumericOperation(left, right, (a, b) => a % b);
             case "&&":
             case "and":
                 return HandleLogicalOperation(left, right, program, (a, b) => a && b);
@@ -69,7 +73,7 @@ public class BinaryExpressionInterpreter : IInterpreter<BinaryExpression>
         return action.Invoke(leftValue, rightValue);
     }
 
-    
+
     private object HandleStringOperation(object left, object right, Func<string, string, object> action)
     {
         if (!IsString(left) || !IsString(right))
@@ -112,7 +116,7 @@ public class BinaryExpressionInterpreter : IInterpreter<BinaryExpression>
 
         return false;
     }
-    
+
     private bool IsNumeric(object target)
     {
         if (target is float)
@@ -142,7 +146,7 @@ public class BinaryExpressionInterpreter : IInterpreter<BinaryExpression>
 
         throw new Exception("Target object is not of numeric type");
     }
-    
+
     private string GetStringValue(object target)
     {
         if (target is string floatValue)

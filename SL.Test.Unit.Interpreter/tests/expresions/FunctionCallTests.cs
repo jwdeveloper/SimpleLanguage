@@ -32,6 +32,23 @@ public class FunctionCallTests : InterpreterTestBase
 
 
     [Test]
+    public async Task ShouldHandleReturnFromFunction()
+    {
+        var interpreter = await ExecuteProgram(@"
+              function a()
+              {
+                  for(var i=0;i<10;i+=1)
+                  {
+                    return i;
+                   }
+              }
+             var i = a();");
+        ProgramAssert.AssertProgram(interpreter)
+            .HasVariable("i", 0);
+    }
+
+
+    [Test]
     public async Task ShouldReturnValue()
     {
         var interpreter = await ExecuteProgram(@"
@@ -67,8 +84,8 @@ public class FunctionCallTests : InterpreterTestBase
          i = getAge();");
         });
     }
-    
-    
+
+
     [Test]
     public async Task ShouldReturnFromFirstStatement()
     {
@@ -84,8 +101,8 @@ public class FunctionCallTests : InterpreterTestBase
             .HasFunction("getAge")
             .HasVariable("i", 10);
     }
-    
-    
+
+
     [Test]
     public async Task ShouldExitFunction()
     {

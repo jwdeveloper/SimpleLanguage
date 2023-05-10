@@ -1,4 +1,6 @@
 using System.Globalization;
+using System.Reflection;
+using SL.Parser.Api;
 using SL.Parser.Common;
 using SL.Parser.Parsing.AST;
 using SL.Parser.Parsing.AST.Expressions;
@@ -7,96 +9,40 @@ namespace SL.Parser.Parsing;
 
 public class NodeFactory
 {
-    public Literal LiteralString(Token token)
+    private readonly CancellationToken _ctx;
+    private readonly Dictionary<Type, object> _parsers;
+    private readonly ITokenIterator _tokenIterator;
+    private MethodInfo _methodInfo;
+    private PropertyInfo _propertyInfo;
+
+
+    public NodeFactory(Dictionary<Type, object> parsers, ITokenIterator tokenIterator, CancellationToken ctx)
     {
-        return new TextLiteral(token.Value);
+        _ctx = ctx;
+        _parsers = parsers;
+        _tokenIterator = tokenIterator;
     }
 
-    public Literal LiteralNumber(Token value)
+    
+    public async Task<T> CreateNode<T>(params object[] parameters)
     {
-        return new NumericLiteral(float.Parse(value.Value, CultureInfo.InvariantCulture));
+        if (_ctx.IsCancellationRequested)
+        {
+            throw new Exception("Cancellation requested");
+        }
+        
+        var parserType = typeof(T);
+        if (!_parsers.ContainsKey(parserType))
+        {
+            throw new Exception($"Parser for type {parserType} not registered");
+        }
+        object interpreter = _parsers[parserType];
+        _methodInfo = interpreter.GetType().GetMethod("Parse");
+        
+        var task = (Task)_methodInfo.Invoke(interpreter, new object[] { _tokenIterator, this, parameters});
+        await task.ConfigureAwait(false);
+        _propertyInfo =  task.GetType().GetProperty("Result");
+        return (T)_propertyInfo.GetValue(task);
     }
-
-    public Literal LiteralBool(Token token)
-    {
-        return new BoolLiteral(bool.Parse(token.Value));
-    }
-
-    public IdentifierLiteral IdentifierLiteral(Token value)
-    {
-        return new IdentifierLiteral(value.Value);
-    }
-
-    public BlockStatement BlockStatement(List<Statement> statements)
-    {
-        return new BlockStatement(statements, string.Empty);
-    }
-
-    public ExpresionStatement ExpressionStatement(Expression expressions)
-    {
-        return new ExpresionStatement(expressions);
-    }
-
-    public FunctionDeclarationStatement FunctionStatement(
-        IdentifierLiteral functionName,
-        IdentifierLiteral functionType,
-        List<ParameterStatement> parameterStatements,
-        BlockStatement body)
-    {
-        return new FunctionDeclarationStatement(functionName, functionType, parameterStatements, body);
-    }
-
-
-    public FunctionCallExpression FunctionCallExpression(
-        IdentifierLiteral functionName,
-        List<Expression> paramteters,
-        Expression nextCall)
-    {
-        return new FunctionCallExpression(functionName, paramteters, nextCall);
-    }
-
-
-    public IfStatement IfStatement(Expression condition, Statement body, Statement elseBody)
-    {
-        return new IfStatement(condition, body, elseBody);
-    }
-
-    public WhileStatement WhileStatement(Expression condition, Statement body, bool isDoWhile)
-    {
-        return new WhileStatement(condition, body, isDoWhile);
-    }
-
-    public ForStatement ForStatement(
-        VariableStatement declaration,
-        Expression condition,
-        Expression assigment,
-        Statement body)
-    {
-        return new ForStatement(declaration, condition, assigment, body);
-    }
-
-    public ForeachStatement ForeachStatement(
-        VariableStatement declaration,
-        Expression iterator,
-        Statement body)
-    {
-        return new ForeachStatement(declaration, iterator, body);
-    }
-
-
-    public BinaryExpression BinaryExpression(Token operation, Expression left, Expression right)
-    {
-        return new BinaryExpression(operation, left, right);
-    }
-
-    public VariableStatement VariableDeclarations(Token variableType,
-        List<VariableDeclarationStatement> variableStatements)
-    {
-        return new VariableStatement(variableType, variableStatements);
-    }
-
-    public EmptyStatement EmptyStatement()
-    {
-        return new EmptyStatement();
-    }
+    
 }

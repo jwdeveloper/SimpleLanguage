@@ -6,19 +6,15 @@ namespace SL.Test.Unit.Parser;
 
 public class ParserTestBase
 {
-    public SL.Parser.Parsing.Parser CreateParser()
-    {
-        return ParserFactory.CreateParser();
-    }
-
-
     
-    protected async Task<SlProgram> CreateProgram(string content)
+    protected async Task<SlProgram> CreateProgramTree(string content)
     {
         var lexer = CreateLexer(content);
         var iterator = await lexer.LexAllToInterator();
-        return ParserFactory.CreateParser().Parse(iterator);
+        return await ParserFactory.CreateParser(iterator, new CancellationToken()).ParseNew();
     }
+
+   
 
     protected  Lexer CreateLexer(string content)
     {

@@ -51,6 +51,16 @@ public class VariableAssigmentTests: InterpreterTestBase
     }
     
     [Test]
+    public async Task ShouldHandleAddString()
+    {
+        var interpreter = await ExecuteProgram("var x = \"hello \"; x += \"world\";");
+
+        ProgramAssert.AssertProgram(interpreter)
+            .HasVariableCount(1)
+            .HasVariable("x", "hello world");
+    }
+    
+    [Test]
     public async Task ShouldHandleMinus()
     {
         var interpreter = await ExecuteProgram("var x = 2; x -= 2;");

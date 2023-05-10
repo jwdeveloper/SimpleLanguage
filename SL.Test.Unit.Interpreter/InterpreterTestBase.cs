@@ -10,7 +10,7 @@ public class InterpreterTestBase : ParserTestBase
 
     public async Task<SL.Interpreter.Evaluator> ExecuteProgram(string code)
     {
-        var program = await CreateProgram(code);
+        var program = await CreateProgramTree(code);
         var interpreter = CreateInterpreter();
         await interpreter.ExecuteProgram(program);
         return interpreter;

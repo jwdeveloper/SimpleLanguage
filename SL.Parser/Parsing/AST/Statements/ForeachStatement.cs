@@ -1,9 +1,10 @@
 using System.Dynamic;
 using SL.Parser.Parsing.AST.Expressions;
+using SL.Parser.Parsing.AST.Statements;
 
 namespace SL.Parser.Parsing.AST;
 
-public class ForeachStatement: Statement
+public class ForeachStatement: ForLoopStatement
 {
     public VariableStatement Declaration { get; }
     public Expression Iterator { get; }

@@ -17,6 +17,10 @@ public class BlockInterpreter : IInterpreter<BlockStatement>
               RemoveDelcaredVariables(beginVariableCount, program);
               return result;
           }
+          if (result is BreakOperation)
+          {
+              return result;
+          }
         }
         RemoveDelcaredVariables(beginVariableCount, program);
         return null;

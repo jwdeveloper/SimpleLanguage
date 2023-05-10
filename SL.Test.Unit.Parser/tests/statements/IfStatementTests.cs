@@ -12,17 +12,16 @@ public class IfStatementTests : ParserTestBase
         var content = "if(true) { }";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
-            .HasChild<IfStatement>(0, assertion =>
+            .HasChild<IfBlockStatement>(0, assertion =>
             {
                 assertion.Has(e =>
                 {
                     NodeAssert.Assert<BoolLiteral>(e.Condition);
                     NodeAssert.Assert<BlockStatement>(e.Body);
-                    NodeAssert.Assert<BlockStatement>(e.ElseBody);
                 });
             });
     }
@@ -34,11 +33,11 @@ public class IfStatementTests : ParserTestBase
         var content = "if(true) { 1; 1.23; } else { 2; 5; 3;} ";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
-            .HasChild<IfStatement>(0, assertion =>
+            .HasChild<IfBlockStatement>(0, assertion =>
             {
                 assertion.Has(e =>
                 {
@@ -56,17 +55,17 @@ public class IfStatementTests : ParserTestBase
         var content = "if(true) { 1; 1.23; } else if(false) { 2; 5; 3;} ";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
-            .HasChild<IfStatement>(0, assertion =>
+            .HasChild<IfBlockStatement>(0, assertion =>
             {
                 assertion.Has(e =>
                 {
                     NodeAssert.Assert<BoolLiteral>(e.Condition);
                     NodeAssert.Assert<BlockStatement>(e.Body).HasChildrenCount(2);
-                    NodeAssert.Assert<IfStatement>(e.ElseBody);
+                    NodeAssert.Assert<IfBlockStatement>(e.ElseBody);
                 });
             });
     }

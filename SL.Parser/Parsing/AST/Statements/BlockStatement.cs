@@ -5,9 +5,9 @@ public class BlockStatement : Statement
    public  List<Statement> Statements { get; }
    private readonly string _name;
 
-   public BlockStatement(List<Statement> statements, string name)
+   public BlockStatement(List<Statement> statements, string name = "block")
    {
-      this.Statements = statements;
+      Statements = statements;
       _name = name == string.Empty ? GetType().Name : name;
    }
 

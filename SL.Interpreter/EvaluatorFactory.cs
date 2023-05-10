@@ -23,15 +23,16 @@ public class EvaluatorFactory
             //Statements
             .WithInterpreter<Statement, StatementInterpreter>()
             .WithInterpreter<VariableStatement, VariableStatementInterpreter>()
-            .WithInterpreter<IfStatement, IfBlockInterpreter>()
-            .WithInterpreter<WhileStatement, WhileBlockInterpeter>()
+            .WithInterpreter<IfBlockStatement, IfBlockInterpreter>()
+            .WithInterpreter<WhileBlockStatement, WhileBlockInterpeter>()
             .WithInterpreter<ForStatement, ForBlockInterpreter>()
             .WithInterpreter<ForeachStatement,ForeachBlockInterpreter>()
             .WithInterpreter<FunctionDeclarationStatement, FunctionStatementInterpreter>()
             .WithInterpreter<BlockStatement,BlockInterpreter>()
-            .WithInterpreter<EmptyStatement>((_, _, _) => Task.FromResult<object>(true))
+            .WithInterpreter<EmptyBlockStatement>((_, _, _) => Task.FromResult<object>(true))
             .WithInterpreter<ExpresionStatement, ExpresionStatementInterpreter>()
             .WithInterpreter<ReturnStatement, ReturnInterpreter>()
+            .WithInterpreter<BreakStatement,BreakInterpreter>()
             
             //Expressions
             .WithInterpreter<FunctionCallExpression, FunctionCallExpressionInterpreter>()
@@ -46,13 +47,8 @@ public class EvaluatorFactory
                 var messages = new StringBuilder();
                 for (var i = 0; i < args.Length; i++)
                 {
-                    var arg = args[i];
-                    if (arg is ProgramVariable variable)
-                    {
-                        arg = variable.value;
-                    }
-
-                    var msg = arg == null ? "NULL" : arg;
+                    var value = program.GetVariableValue(args[i], "var");
+                    var msg = value == null ? "NULL" : value;
 
                     messages.Append(msg);
                     if (i != args.Length - 1)
@@ -75,10 +71,8 @@ public class EvaluatorFactory
                 {
                     throw new Exception("Bad number of arguments");
                 }
-
-                var seconds = (float)args[0];
-                
-                Thread.Sleep((int)seconds);
+                var seconds = (float)program.GetVariableValue(args[0], "number");
+                await Task.Delay((int)seconds, program.CANCELLATION_TOKEN);
                 return program.IsCancelRequested;
             })
             .WithSystemFunction("range", "list", async (args, program) =>
@@ -86,18 +80,12 @@ public class EvaluatorFactory
                 if (args.Length == 1)
                 {
                     var list = new List<object>();
-
-                    float to = -1;
-                    if (args[0] is float floatValue)
+                    var value = (float)program.GetVariableValue(args[0], "number");
+                    if (value < 0)
                     {
-                        to = floatValue;
+                        value = 0;
                     }
-                    if (args[0] is ProgramVariable programVariable)
-                    {
-                        to = (float)programVariable.value;
-                    }
-                   
-                    for (var i = 0; i < to; i++)
+                    for (float i = 0; i < value; i++)
                     {
                         list.Add(i);
                     }
@@ -108,12 +96,12 @@ public class EvaluatorFactory
                         name = Guid.NewGuid().ToString()
                     };
                 }
-                if (args.Length == 1)
+                if (args.Length == 2)
                 {
                     var list = new List<object>();
-                    var from = (float)args[0];
-                    var to = (float) args[1];
-                    for (var i = from; i <= to; i++)
+                    var from = (float)program.GetVariableValue(args[0], "number");
+                    var to =  (float)program.GetVariableValue(args[1], "number");
+                    for (float i = from; i <= to; i++)
                     {
                         list.Add(i);
                     }

@@ -9,7 +9,7 @@ public class ReturnStatement : Statement
 
     public bool HasReturnExpression => ReturnExpression != null;
 
-    public ReturnStatement(Expression expression)
+    public ReturnStatement(Expression? expression)
     {
         ReturnExpression = expression;
     }

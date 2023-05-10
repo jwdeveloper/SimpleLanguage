@@ -73,20 +73,18 @@ namespace SL.Application
                 try
                 {
                     InvokeAction(() => Clear(Output_program));
-
+                    
                     var lexer = LexerFactory.CreateLexer(input);
-                    var parser = ParserFactory.CreateParser();
-                    var evaluator = EvaluatorFactory.CreateEvaluator(_source.Token);
-
-                    
-                    
                     var tokenIterator = await lexer.LexAllToInterator(_source.Token);
                     InvokeAction(() => DisplayTokens(tokenIterator.ToList()));
                     
-                    var programTree = parser.Parse(tokenIterator);
+                    
+                    var parser = ParserFactory.CreateParser(tokenIterator, _source.Token);
+                    var programTree = await parser.ParseNew();
                     InvokeAction(() => SetText(Output_tree, programTree.ToJson()));
                     
-                              
+                    
+                    var evaluator = EvaluatorFactory.CreateEvaluator(_source.Token);
                     evaluator.OnConsoleUpdate(list =>
                     {
                         InvokeAction(() => DisplayConsole(list));

@@ -1,10 +1,11 @@
 using SL.Parser.Parsing.AST;
+using SL.Parser.Parsing.AST.Statements;
 
 namespace SL.Interpreter.Interpreters;
 
-public class WhileBlockInterpeter : IInterpreter<WhileStatement>
+public class WhileBlockInterpeter : IInterpreter<WhileBlockStatement>
 {
-    public async Task<object> Interpreter(WhileStatement node, ProgramContext program, InterpreterFactory factory)
+    public async Task<object> Interpreter(WhileBlockStatement node, ProgramContext program, InterpreterFactory factory)
     {
         if (node.IsDoWhile)
         {
@@ -15,7 +16,16 @@ public class WhileBlockInterpeter : IInterpreter<WhileStatement>
         var conditionResult = await GetConditionResult(node.Condition, program, factory);
         while (conditionResult &&  !program.IsCancelRequested)
         {
-            await factory.InterpreterNode(node.Body);
+            var result = await factory.InterpreterNode(node.Body);
+            if (result is ProgramReturn returnStatement)
+            {
+                return returnStatement;
+            }
+            if (result is BreakOperation)
+            {
+                return null;
+            }
+            
             conditionResult = await GetConditionResult(node.Condition, program, factory);
             stackOverflowIterations--;
 

@@ -11,13 +11,10 @@ public class ForeachStatementTests : ParserTestBase
         var content = "for(var i =0 in range(10)) { } ";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
-            .HasChild<ForeachStatement>(0, assertion =>
-            {
-               
-            });
+            .HasChild<ForeachStatement>(0);
     }
 }

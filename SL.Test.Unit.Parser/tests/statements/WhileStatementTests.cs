@@ -13,11 +13,11 @@ public class WhileStatementTests  : ParserTestBase
         var content = "while(true) { 1; 1.23; } ";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
-            .HasChild<WhileStatement>(0, assertion =>
+            .HasChild<WhileBlockStatement>(0, assertion =>
             {
                 assertion.Has(e =>
                 {
@@ -36,11 +36,11 @@ public class WhileStatementTests  : ParserTestBase
         var content = "do { 1; 1.23; } while(true) ";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
-            .HasChild<WhileStatement>(0, assertion =>
+            .HasChild<WhileBlockStatement>(0, assertion =>
             {
                 assertion.Has(e =>
                 {

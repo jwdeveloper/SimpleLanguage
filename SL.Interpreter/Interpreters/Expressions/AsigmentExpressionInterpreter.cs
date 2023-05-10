@@ -23,19 +23,22 @@ public class AsigmentExpressionInterpreter : IInterpreter<AssigmentExpression>
                 HandleAssigment(variable, right, program);
                 break;
             case "+=":
-                HandleNumbericAssigment(variable, right, (a, b) => a + b);
+                if (program.IsValueMatchType("number",variable))
+                    HandleNumbericAssigment(program, variable, right, (a, b) => a + b);
+                else
+                    HandleStringAssigment(program, variable, right, (a, b) => a + b);
                 break;
             case "-=":
-                HandleNumbericAssigment(variable, right, (a, b) => a - b);
+                HandleNumbericAssigment(program, variable, right, (a, b) => a - b);
                 break;
             case "*=":
-                HandleNumbericAssigment(variable, right, (a, b) => a * b);
+                HandleNumbericAssigment(program, variable, right, (a, b) => a * b);
                 break;
             case "/=":
-                HandleNumbericAssigment(variable, right, (a, b) => a / b);
+                HandleNumbericAssigment(program, variable, right, (a, b) => a / b);
                 break;
             case "^=":
-                HandleNumbericAssigment(variable, right, (a, b) => (float)Math.Pow(a, b));
+                HandleNumbericAssigment(program, variable, right, (a, b) => (float)Math.Pow(a, b));
                 break;
         }
         return left;
@@ -58,33 +61,25 @@ public class AsigmentExpressionInterpreter : IInterpreter<AssigmentExpression>
         left.value = right;
     }
 
-    private void HandleNumbericAssigment(ProgramVariable variable, object value, Func<float, float, float> action)
+    private void HandleNumbericAssigment(ProgramContext context, ProgramVariable variable, object value, Func<float, float, float> action)
     {
-        if (!IsNumeric(variable.value))
-        {
-            throw new Exception($"Assigment action require numberic variable instead of {variable.type}");
-        }
-        if (!IsNumeric(value))
-        {
-            throw new Exception($"Assigned Value need to be type of numeric {value}");
-        }
-        
-        var currentValue = (float)variable.value;
-        var newValue = (float)value;
+        var currentValue = (float)context.GetVariableValue(variable, "number");
+        var newValue = (float)context.GetVariableValue(value, "number");
 
         variable.value = action.Invoke(currentValue, newValue);
     }
 
+    private void HandleStringAssigment(ProgramContext context, ProgramVariable variable, object value, Func<string, string, string> action)
+    {
+        var currentValue = (string)context.GetVariableValue(variable, "text");
+        var newValue = (string)context.GetVariableValue(value, "text");
+
+        variable.value = action.Invoke(currentValue, newValue);
+    }
 
     private bool IsProgramVariable(object left)
     {
         return left is ProgramVariable;
     }
-
-    private bool IsNumeric(object variable)
-    {
-        return variable is float;
-    }
-
  
 }

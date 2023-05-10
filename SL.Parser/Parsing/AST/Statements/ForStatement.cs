@@ -1,8 +1,9 @@
 using System.Dynamic;
+using SL.Parser.Parsing.AST.Statements;
 
 namespace SL.Parser.Parsing.AST;
 
-public class ForStatement : Statement
+public class ForStatement : ForLoopStatement
 {
     public VariableStatement? Declaration { get; }
     public Expression? Condition { get; }
@@ -20,11 +21,10 @@ public class ForStatement : Statement
         Statement body) 
      
     {
-        this.Declaration = declaration;
-        this.Condition = condition;
-        this.Assigment = assigment;
-        this.Body = body;
-        
+        Declaration = declaration;
+        Condition = condition;
+        Assigment = assigment;
+        Body = body;
     }
 
 

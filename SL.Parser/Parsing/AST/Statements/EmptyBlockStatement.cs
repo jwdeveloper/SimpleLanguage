@@ -2,7 +2,7 @@ using System.Dynamic;
 
 namespace SL.Parser.Parsing.AST;
 
-public class EmptyStatement : Statement
+public class EmptyBlockStatement : Statement
 {
     
     

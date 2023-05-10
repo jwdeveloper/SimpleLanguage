@@ -12,7 +12,7 @@ public class ForStatementTests : ParserTestBase
         var content = "for(var i =0; i < 10; i+=1) {  x +=1; } ";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
@@ -29,7 +29,7 @@ public class ForStatementTests : ParserTestBase
         var content = "for(;;) {  x +=1; } ";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
@@ -46,7 +46,7 @@ public class ForStatementTests : ParserTestBase
         var content = "for(var i in objects) {  } ";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)

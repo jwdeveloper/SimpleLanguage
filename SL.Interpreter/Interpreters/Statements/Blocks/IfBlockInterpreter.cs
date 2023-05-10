@@ -2,9 +2,9 @@ using SL.Parser.Parsing.AST;
 
 namespace SL.Interpreter.Interpreters;
 
-public class IfBlockInterpreter : IInterpreter<IfStatement>
+public class IfBlockInterpreter : IInterpreter<IfBlockStatement>
 {
-    public async Task<object> Interpreter(IfStatement node, ProgramContext program, InterpreterFactory factory)
+    public async Task<object> Interpreter(IfBlockStatement node, ProgramContext program, InterpreterFactory factory)
     {
         var conditionResult = await factory.InterpreterNode(node.Condition);
         if (!program.IsBoolean(conditionResult))

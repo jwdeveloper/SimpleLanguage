@@ -1,5 +1,6 @@
 using System.Dynamic;
 using SL.Parser.Common;
+using SL.Parser.Parsing.AST.Expressions;
 
 namespace SL.Parser.Parsing.AST;
 
@@ -9,9 +10,17 @@ public class VariableStatement : Statement
     public List<VariableDeclarationStatement> VariableDeclarations { get; }
     public string VariableType => _variableTypeToken.Value;
     
+    
+    //TODO Remove 
     public VariableStatement(Token variableTypeToken, List<VariableDeclarationStatement> variableDeclarations)
     {
         _variableTypeToken = variableTypeToken;
+        VariableDeclarations = variableDeclarations;
+    }
+    
+    public VariableStatement(IdentifierLiteral variableTypeToken, List<VariableDeclarationStatement> variableDeclarations)
+    {
+        _variableTypeToken = new Token(TokenType.DOT, variableTypeToken.Value.ToString(),null);
         VariableDeclarations = variableDeclarations;
     }
 

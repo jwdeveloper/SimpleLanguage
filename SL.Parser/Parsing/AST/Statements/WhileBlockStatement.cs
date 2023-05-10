@@ -3,7 +3,7 @@ using SL.Parser.Parsing.AST.Expressions;
 
 namespace SL.Parser.Parsing.AST;
 
-public class WhileStatement : Statement
+public class WhileBlockStatement : Statement
 {
     public Expression Condition { get; }
 
@@ -11,7 +11,7 @@ public class WhileStatement : Statement
 
     public bool IsDoWhile { get; }
     
-    public WhileStatement(Expression condition, Statement body, bool isDoWhile)
+    public WhileBlockStatement(Expression condition, Statement body, bool isDoWhile)
     {
         Body = body;
         Condition = condition;

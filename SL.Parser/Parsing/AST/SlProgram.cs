@@ -1,5 +1,6 @@
 using System.Dynamic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SL.Parser.Parsing.AST;
 
@@ -12,7 +13,11 @@ public class SlProgram : BlockStatement
 
     public string ToJson()
     {
-       return JsonSerializer.Serialize(GetModel(), new JsonSerializerOptions { WriteIndented = true });
+       return JsonSerializer.Serialize(GetModel(), new JsonSerializerOptions
+       {
+           WriteIndented = true,
+           Converters = { new JsonStringEnumConverter() },
+       });
     }
     
 }

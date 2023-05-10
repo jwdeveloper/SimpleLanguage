@@ -49,6 +49,24 @@ public class BinaryExpresionTests : InterpreterTestBase
     }
     
     [Test]
+    public async Task ShouldHandleModulo()
+    {
+        var interpreter = await ExecuteProgram("var x = 1 % 1;");
+
+        ProgramAssert.AssertProgram(interpreter)
+            .HasVariable("x", 0);
+    }
+    
+    [Test]
+    public async Task ShouldHandleModulo2()
+    {
+        var interpreter = await ExecuteProgram("var x = 1 mod 1;");
+
+        ProgramAssert.AssertProgram(interpreter)
+            .HasVariable("x", 0);
+    }
+    
+    [Test]
     public async Task ShouldHandleNotEqual()
     {
         var interpreter = await ExecuteProgram("var x = 1 != 2;");

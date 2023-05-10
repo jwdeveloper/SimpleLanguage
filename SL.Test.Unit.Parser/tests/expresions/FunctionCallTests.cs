@@ -12,7 +12,7 @@ public class FunctionCallTests : ParserTestBase
         var content = "getAge();";
 
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
@@ -38,7 +38,7 @@ public class FunctionCallTests : ParserTestBase
         var content = "getAge(1,\"name\",true, userAge);";
 
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
@@ -64,7 +64,7 @@ public class FunctionCallTests : ParserTestBase
         var content = "var age = getAge(1,\"name\",true, userAge);";
 
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
@@ -87,7 +87,7 @@ public class FunctionCallTests : ParserTestBase
         var content = "getAge(1).getName(\"Mark\");";
 
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
@@ -116,7 +116,7 @@ public class FunctionCallTests : ParserTestBase
         var content = "getAge(1).Name;";
 
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)

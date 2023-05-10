@@ -14,7 +14,7 @@ public class FunctionStatementTests : ParserTestBase
         var content = "function number GetName(text name, number age) { var i =0; return; }";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
@@ -28,7 +28,7 @@ public class FunctionStatementTests : ParserTestBase
         var content = "function GetName() { var i =0;  return 2 + 3; }";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)

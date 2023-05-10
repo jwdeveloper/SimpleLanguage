@@ -1,4 +1,5 @@
 using SL.Parser.Parsing.AST;
+using SL.Parser.Parsing.AST.Statements;
 
 namespace SL.Interpreter.Interpreters;
 
@@ -28,7 +29,16 @@ public class ForeachBlockInterpreter : IInterpreter<ForeachStatement>
         for (var i = 0; i < list.Count; i++)
         {
             programVariable.value = list[i];
-            await factory.InterpreterNode(node.Body);
+            var result= await factory.InterpreterNode(node.Body);
+            if (result is ProgramReturn returnStatement)
+            {
+                return returnStatement;
+            }
+            if (result is BreakOperation)
+            {
+                return null;
+            }
+            
             stackOverflowIterations--;
             if (stackOverflowIterations  < 0)
             {

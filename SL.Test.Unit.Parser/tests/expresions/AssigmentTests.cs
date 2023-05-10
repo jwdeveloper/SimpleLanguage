@@ -13,7 +13,7 @@ public class AssigmentTests : ParserTestBase
         var content = "myValue = 12 + 3;";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
@@ -39,7 +39,7 @@ public class AssigmentTests : ParserTestBase
         var content = "x = y = 12;";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
@@ -65,7 +65,7 @@ public class AssigmentTests : ParserTestBase
         var content = "x += 12;";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
@@ -95,7 +95,7 @@ public class AssigmentTests : ParserTestBase
         //Assert
         Assert.ThrowsAsync<SyntaxException>( async () =>
         {
-            await CreateProgram(content);
+            await CreateProgramTree(content);
         });
     }
     

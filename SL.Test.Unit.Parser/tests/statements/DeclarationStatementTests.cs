@@ -12,7 +12,7 @@ public class DeclarationStatement : ParserTestBase
         var content = "var name = 12;";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program);
@@ -25,7 +25,7 @@ public class DeclarationStatement : ParserTestBase
         var content = "var name;";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program);
@@ -39,7 +39,7 @@ public class DeclarationStatement : ParserTestBase
         var content = "var name, age, gender =1;";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program);

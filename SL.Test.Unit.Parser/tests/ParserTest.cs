@@ -48,7 +48,7 @@ public class ParserTest : ParserTestBase
 ";
         Assert.DoesNotThrowAsync(async () =>
         {
-            var program = await CreateProgram(content);
+            var program = await CreateProgramTree(content);
             var model = program.ToJson();
             NodeAssert.Assert<SlProgram>(program);
         });

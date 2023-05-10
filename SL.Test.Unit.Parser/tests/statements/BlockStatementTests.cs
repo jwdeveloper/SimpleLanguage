@@ -12,7 +12,7 @@ public class BlockStatementTests : ParserTestBase
         var content = "{ 1.23; { } }";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
@@ -33,13 +33,13 @@ public class BlockStatementTests : ParserTestBase
         var content = "; ; ;";
      
         //Act
-        var program = await CreateProgram(content);
+        var program = await CreateProgramTree(content);
 
         //Assert
         NodeAssert.Assert<SlProgram>(program)
             .HasChildrenCount(3)
-            .HasChild<EmptyStatement>(0)
-            .HasChild<EmptyStatement>(1)
-            .HasChild<EmptyStatement>(2);
+            .HasChild<EmptyBlockStatement>(0)
+            .HasChild<EmptyBlockStatement>(1)
+            .HasChild<EmptyBlockStatement>(2);
     }
 }
