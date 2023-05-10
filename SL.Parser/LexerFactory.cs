@@ -36,7 +36,7 @@ public class LexerFactory
         builder.WithSymbol(new[] { "var", "number", "text", "bool" }, TokenType.OBJECT_TYPE);
         builder.WithSymbol(new[] { "&&", "and", "||", "or", "!" }, TokenType.LOGICAL_OPERATOR);
         builder.WithSymbol(new[] { "==", "is", "!=", ">", ">=", "<", "<=" }, TokenType.EQUALITY_OPREATOR);
-        builder.WithSymbol(new[] { "if", "else", "while", "do", "for", "in", "null", "function", "return","break" },
+        builder.WithSymbol(new[] { "if", "else", "while", "do", "for", "in", "null", "function", "return","break","class","new","this"},
             TokenType.KEYWORLD);
         builder.WithSymbol(new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "." }, new NumberHandler());
         return builder.Build();

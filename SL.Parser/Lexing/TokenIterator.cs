@@ -29,7 +29,21 @@ public class TokenIterator : AbstractIterator<Token>, ITokenIterator
         }
         return ValiateToken(token);
     }
-   
+
+    public Token NextToken(string value, TokenType type)
+    {
+        var token = Advance();
+        if (token.Value != value)
+        {
+            throw new BadTokenException(value, token);
+        }
+        if (token.Type != type)
+        {
+            throw new BadTokenException(value, token);
+        }
+        return ValiateToken(token);
+    }
+
 
     public Token NextToken(params TokenType[] types)
     {
@@ -53,26 +67,14 @@ public class TokenIterator : AbstractIterator<Token>, ITokenIterator
         return Peek(1);
     }
 
-    public Token LookUp(string value)
+    public bool LookUp(string value)
     {
-        var token = Peek(1);
-        if (token.Value != value)
-        {
-            throw new BadTokenException(value, token);
-        }
-
-        return token;
+        return Peek(1).Value == value;
     }
 
-    public Token LookUp(TokenType value)
+    public bool LookUp(TokenType value)
     {
-        var token = Peek(1);
-        if (token.Type != value)
-        {
-            throw new BadTokenException(value.ToString(), token);
-        }
-
-        return token;
+        return Peek(1).Type == value;
     }
 
     public new bool IsValid()

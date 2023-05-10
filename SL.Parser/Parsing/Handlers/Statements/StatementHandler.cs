@@ -4,6 +4,7 @@ using SL.Parser.Common;
 using SL.Parser.Parsing.AST;
 using SL.Parser.Parsing.AST.Expressions;
 using SL.Parser.Parsing.AST.Statements;
+using SL.Parser.Parsing.Handlers.Statements.Declarations;
 
 namespace SL.Parser.Parsing.Handlers.Statements;
 
@@ -27,12 +28,16 @@ public class StatementHandler : IParserHandler<Statement>
                     return await parserFactory.CreateNode<WhileBlockStatement>();
                 if (token.Value is "for")
                     return await parserFactory.CreateNode<ForLoopStatement>();
-                if (token.Value is "function")
-                    return await parserFactory.CreateNode<FunctionDeclarationStatement>();
                 if (token.Value is "return")
                     return await parserFactory.CreateNode<ReturnStatement>();
                 if (token.Value is "break")
                     return await parserFactory.CreateNode<BreakStatement>();
+                if (token.Value is "function")
+                    return await parserFactory.CreateNode<FunctionDeclarationStatement>();
+                if (token.Value is "class")
+                    return await parserFactory.CreateNode<ClassDeclarationStatement>();
+                if (token.Value is "new")
+                    return await parserFactory.CreateNode<ExpresionStatement>();
                 break;
             default:
                 return await parserFactory.CreateNode<ExpresionStatement>();

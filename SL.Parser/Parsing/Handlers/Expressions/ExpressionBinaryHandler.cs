@@ -5,7 +5,7 @@ using SL.Parser.Parsing.AST.Expressions;
 
 namespace SL.Parser.Parsing.Handlers.Expressions;
 
-public class ExpressionBinaryHandler: IParserHandler<Expression>
+public class ExpressionBinaryHandler : IParserHandler<Expression>
 {
     public async Task<Expression> Parse(ITokenIterator tokenIterator, NodeFactory parserFactory, object[] parameters)
     {
@@ -22,6 +22,10 @@ public class ExpressionBinaryHandler: IParserHandler<Expression>
                     case TokenType.OPEN_ARGUMETNS:
                         return await parserFactory.CreateNode<ParentasisExpressionStatement>();
                     case TokenType.IDENTIFIER:
+                    case TokenType.KEYWORLD:
+                        if (token.Value == "new")
+                            return await parserFactory.CreateNode<ClassInitializeExpressionStatement>();
+                        else
                         return await parserFactory.CreateNode<IdentifierLiteral>();
                     default:
                         return await parserFactory.CreateNode<Literal>();
@@ -29,9 +33,9 @@ public class ExpressionBinaryHandler: IParserHandler<Expression>
             });
         return await finder.Find();
     }
-    
-    
-      public class ExpressionFinder
+
+
+    public class ExpressionFinder
     {
         private ITokenIterator _tokenIterator;
         private NodeFactory _parserFactory;
@@ -57,7 +61,7 @@ public class ExpressionBinaryHandler: IParserHandler<Expression>
             return this;
         }
 
-        private async Task<Expression> GetGenericExpression(TokenType tokenType,  Func<Task<Expression>> next)
+        private async Task<Expression> GetGenericExpression(TokenType tokenType, Func<Task<Expression>> next)
         {
             var left = await next.Invoke();
             while (_tokenIterator.LookUp().Type == tokenType)
@@ -77,7 +81,7 @@ public class ExpressionBinaryHandler: IParserHandler<Expression>
             var f2 = () => GetGenericExpression(TokenType.BINARY_ADDATIVE_OPERATOR, f1);
             var f3 = () => GetGenericExpression(TokenType.EQUALITY_OPREATOR, f2);
             var f4 = () => GetGenericExpression(TokenType.LOGICAL_OPERATOR, f3);
-            
+
             return await f4.Invoke();
         }
     }

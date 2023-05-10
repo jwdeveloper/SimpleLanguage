@@ -11,7 +11,7 @@ public class IdetifierHandler : IParserHandler<IdentifierLiteral>
         object[] parameters)
     {
         var nextToken = tokenIterator.LookUp();
-        if (nextToken.Type is not (TokenType.IDENTIFIER or TokenType.OBJECT_TYPE))
+        if (nextToken.Type is not (TokenType.IDENTIFIER or TokenType.OBJECT_TYPE or TokenType.KEYWORLD))
         {
             throw new SyntaxException("Expected identifier", tokenIterator.LookUp());
         }
@@ -33,10 +33,10 @@ public class IdetifierHandler : IParserHandler<IdentifierLiteral>
             }
             case TokenType.OPEN_ARGUMETNS:
                 return await parserFactory.CreateNode<FunctionCallExpression>(new IdentifierLiteral(token.Value));
-             default:   
+            
+            default:
                 return new IdentifierLiteral(token.Value);
         }
-      
     }
 
 

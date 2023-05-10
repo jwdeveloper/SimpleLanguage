@@ -4,17 +4,17 @@ namespace SL.Parser.Parsing.AST.Expressions;
 
 public class FunctionCallExpression : IdentifierLiteral
 {
-    private IdentifierLiteral _functionName { get; }
+    public IdentifierLiteral FunctionNameLiteral { get; }
 
     public List<Expression> Paramteters { get; }
 
-    public string FunctionName => _functionName.IdentifierName;
+    public string FunctionName => FunctionNameLiteral.IdentifierName;
 
-    public FunctionCallExpression(IdentifierLiteral functionName,
+    public FunctionCallExpression(IdentifierLiteral functionNameLiteral,
         List<Expression> paramteters,
-        IdentifierLiteral nextCall = null) : base(functionName.IdentifierName, nextCall)
+        IdentifierLiteral nextCall = null) : base(functionNameLiteral.IdentifierName, nextCall)
     {
-        this._functionName = functionName;
+        this.FunctionNameLiteral = functionNameLiteral;
         this.Paramteters = paramteters;
     }
 
@@ -23,7 +23,7 @@ public class FunctionCallExpression : IdentifierLiteral
     {
         dynamic model = new ExpandoObject();
         model.name = Name();
-        model.functionName = _functionName.GetModel();
+        model.functionName = FunctionNameLiteral.GetModel();
 
         var parametersModel = new List<dynamic>();
         foreach (var paramerter in Paramteters)

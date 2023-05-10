@@ -18,17 +18,17 @@ public class ForeachBlockInterpreter : IInterpreter<ForeachStatement>
 
         var iterator = await factory.InterpreterNode(node.Iterator);
         var forIterator = iterator as ProgramVariable;
-        if (forIterator is null || forIterator.type != "list")
+        if (forIterator is null || forIterator.Type != "list")
         {
             throw new Exception("Iterator must has List type");
         }
 
 
-        var list = forIterator.value as List<object>;
+        var list = forIterator.Value as List<object>;
         var stackOverflowIterations = 1000;
         for (var i = 0; i < list.Count; i++)
         {
-            programVariable.value = list[i];
+            programVariable.Value = list[i];
             var result= await factory.InterpreterNode(node.Body);
             if (result is ProgramReturn returnStatement)
             {

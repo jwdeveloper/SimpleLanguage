@@ -51,7 +51,7 @@ public class ProgramAssert
     public ProgramAssert HasVariable(string name, object value)
     {
         HasVariable(name);
-        var variableValue = _evaluator.ProgramContext.Variables[name].value;
+        var variableValue = _evaluator.ProgramContext.Variables[name].Value;
         Assert.That(variableValue, Is.EqualTo(value));
         return this;
     }

@@ -79,7 +79,7 @@ public class ProgramContext
     {
         if (value is ProgramVariable programVariable)
         {
-            return GetVariableValue(programVariable.value, type);
+            return GetVariableValue(programVariable.Value, type);
         }
 
         if (!IsValueMatchType(type, value))
@@ -124,7 +124,7 @@ public class ProgramContext
 
     public void CreateVariable(string type, string name, object value)
     {
-        CreateVariable(new ProgramVariable() { type = type, name = name, value = value });
+        CreateVariable(new ProgramVariable() { Type = type, Name = name, Value = value });
     }
     
     public void RemoveVariable(int count= 1)
@@ -136,18 +136,18 @@ public class ProgramContext
            {
                break;
            }
-           Variables.Remove(variable.name);
+           Variables.Remove(variable.Name);
            count--;
         }
     }
     
     public void CreateVariable(ProgramVariable programVariable)
     {
-        if (Variables.ContainsKey(programVariable.name))
+        if (Variables.ContainsKey(programVariable.Name))
         {
-            throw new Exception($"Variable already declared {programVariable.name}");
+            throw new Exception($"Variable already declared {programVariable.Name}");
         }
-        Variables.Add(programVariable.name, programVariable);
+        Variables.Add(programVariable.Name, programVariable);
         _variablesStack.Push(programVariable);
     }
     
@@ -187,7 +187,7 @@ public class ProgramContext
     {
         if (value is ProgramVariable variable)
         {
-            return IsValueMatchType(type, variable.value);
+            return IsValueMatchType(type, variable.Value);
         }
         
         if (type == "number" )
@@ -235,7 +235,7 @@ public class ProgramContext
 
         if (target is ProgramVariable variable)
         {
-            return IsBoolean(variable.value);
+            return IsBoolean(variable.Value);
         }
 
         return target != null;
@@ -250,7 +250,7 @@ public class ProgramContext
 
         if (target is ProgramVariable variable)
         {
-            return GetBoolValue(variable.value);
+            return GetBoolValue(variable.Value);
         }
 
         return target != null;

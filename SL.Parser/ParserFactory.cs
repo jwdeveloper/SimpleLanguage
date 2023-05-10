@@ -30,8 +30,10 @@ public class ParserFactory
         parserBuilder.WithParserHandler<VariableStatement, VariableHandler>();
         
         //Statements declarations
+        parserBuilder.WithParserHandler<ClassDeclarationStatement, ClassDeclarationHandler>();
         parserBuilder.WithParserHandler<FunctionDeclarationStatement, FunctionDeclarationHandler>();
         parserBuilder.WithParserHandler<VariableDeclarationStatement, VariableDeclarationHandler>();
+        parserBuilder.WithParserHandler<List<ParameterStatement>, ParameterStatementListHandler>();
         
         
         //Statements blocks
@@ -50,6 +52,7 @@ public class ParserFactory
         //Expressions literals
         parserBuilder.WithParserHandler<IdentifierLiteral, IdetifierHandler>();
         parserBuilder.WithParserHandler<FunctionCallExpression, FunctionCallHandler>();
+        parserBuilder.WithParserHandler<ClassInitializeExpressionStatement, ClassInitializeHandler>();
         parserBuilder.WithParserHandler<Literal, LiteralHandler>();
         
         return parserBuilder.Build();

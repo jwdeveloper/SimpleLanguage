@@ -31,9 +31,9 @@ public class VariableStatementInterpreter : IInterpreter<VariableStatement>
             
             varaibles.Add(new ProgramVariable
             {
-                name = declaration.GetVariableDeclarationName,
-                type = variableTypeName,
-                value = null
+                Name = declaration.GetVariableDeclarationName,
+                Type = variableTypeName,
+                Value = null
             });
         }
 
@@ -55,7 +55,7 @@ public class VariableStatementInterpreter : IInterpreter<VariableStatement>
 
         foreach(var variable in varaibles)
         {
-            variable.value = assigmentValue;
+            variable.Value = assigmentValue;
             program.CreateVariable(variable);
         }
         return varaibles;
@@ -85,12 +85,12 @@ public class VariableStatementInterpreter : IInterpreter<VariableStatement>
     
     private object GetProgramVariableValue(ProgramVariable program)
     {
-        if (program.value is ProgramVariable programVariable)
+        if (program.Value is ProgramVariable programVariable)
         {
             return GetProgramVariableValue(programVariable);
         }
 
-        return program.value;
+        return program.Value;
     }
 
    

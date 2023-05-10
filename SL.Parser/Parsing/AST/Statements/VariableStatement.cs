@@ -20,7 +20,7 @@ public class VariableStatement : Statement
     
     public VariableStatement(IdentifierLiteral variableTypeToken, List<VariableDeclarationStatement> variableDeclarations)
     {
-        _variableTypeToken = new Token(TokenType.DOT, variableTypeToken.Value.ToString(),null);
+        _variableTypeToken = new Token(TokenType.IDENTIFIER, variableTypeToken.Value.ToString(),null);
         VariableDeclarations = variableDeclarations;
     }
 

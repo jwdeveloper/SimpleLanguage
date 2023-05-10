@@ -47,18 +47,18 @@ public class AsigmentExpressionInterpreter : IInterpreter<AssigmentExpression>
 
     private void HandleAssigment(ProgramVariable left, object right, ProgramContext programContext)
     {
-        if (!programContext.IsValueMatchType(left.type, right))
+        if (!programContext.IsValueMatchType(left.Type, right))
         {
             throw  new Exception($"Type not match ");
         }
 
         if (right is ProgramVariable programVariable)
         {
-            HandleAssigment(left, programVariable.value, programContext);
+            HandleAssigment(left, programVariable.Value, programContext);
             return;
         }
 
-        left.value = right;
+        left.Value = right;
     }
 
     private void HandleNumbericAssigment(ProgramContext context, ProgramVariable variable, object value, Func<float, float, float> action)
@@ -66,7 +66,7 @@ public class AsigmentExpressionInterpreter : IInterpreter<AssigmentExpression>
         var currentValue = (float)context.GetVariableValue(variable, "number");
         var newValue = (float)context.GetVariableValue(value, "number");
 
-        variable.value = action.Invoke(currentValue, newValue);
+        variable.Value = action.Invoke(currentValue, newValue);
     }
 
     private void HandleStringAssigment(ProgramContext context, ProgramVariable variable, object value, Func<string, string, string> action)
@@ -74,7 +74,7 @@ public class AsigmentExpressionInterpreter : IInterpreter<AssigmentExpression>
         var currentValue = (string)context.GetVariableValue(variable, "text");
         var newValue = (string)context.GetVariableValue(value, "text");
 
-        variable.value = action.Invoke(currentValue, newValue);
+        variable.Value = action.Invoke(currentValue, newValue);
     }
 
     private bool IsProgramVariable(object left)

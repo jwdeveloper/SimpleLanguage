@@ -111,7 +111,7 @@ public class BinaryExpressionInterpreter : IInterpreter<BinaryExpression>
 
         if (target is ProgramVariable variable)
         {
-            return IsString(variable.value);
+            return IsString(variable.Value);
         }
 
         return false;
@@ -126,7 +126,7 @@ public class BinaryExpressionInterpreter : IInterpreter<BinaryExpression>
 
         if (target is ProgramVariable variable)
         {
-            return IsNumeric(variable.value);
+            return IsNumeric(variable.Value);
         }
 
         return false;
@@ -141,7 +141,7 @@ public class BinaryExpressionInterpreter : IInterpreter<BinaryExpression>
 
         if (target is ProgramVariable variable)
         {
-            return GetNumericValue(variable.value);
+            return GetNumericValue(variable.Value);
         }
 
         throw new Exception("Target object is not of numeric type");
@@ -156,7 +156,7 @@ public class BinaryExpressionInterpreter : IInterpreter<BinaryExpression>
 
         if (target is ProgramVariable variable)
         {
-            return GetStringValue(variable.value);
+            return GetStringValue(variable.Value);
         }
 
         throw new Exception("Target object is not of string type");
@@ -167,7 +167,7 @@ public class BinaryExpressionInterpreter : IInterpreter<BinaryExpression>
     {
         if (target is ProgramVariable variable)
         {
-            return GetValue(variable.value);
+            return GetValue(variable.Value);
         }
 
         return target;

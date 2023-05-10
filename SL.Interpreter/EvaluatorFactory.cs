@@ -91,9 +91,9 @@ public class EvaluatorFactory
                     }
                     return new ProgramVariable
                     {
-                        type = "list",
-                        value = list,
-                        name = Guid.NewGuid().ToString()
+                        Type = "list",
+                        Value = list,
+                        Name = Guid.NewGuid().ToString()
                     };
                 }
                 if (args.Length == 2)
@@ -107,9 +107,9 @@ public class EvaluatorFactory
                     }
                     return new ProgramVariable
                     {
-                        type = "list",
-                        value = list,
-                        name = Guid.NewGuid().ToString()
+                        Type = "list",
+                        Value = list,
+                        Name = Guid.NewGuid().ToString()
                     };
                 }
                 throw new Exception("Bad number of arguments");
@@ -118,9 +118,9 @@ public class EvaluatorFactory
             {
                 return new ProgramVariable
                 {
-                    type = "list",
-                    value = new List<object>(),
-                    name = Guid.NewGuid().ToString()
+                    Type = "list",
+                    Value = new List<object>(),
+                    Name = Guid.NewGuid().ToString()
                 };
             })
             .Build();
