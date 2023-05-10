@@ -24,6 +24,7 @@ public class ProgramClass
 
 
         consturctor.Invoker.Invoke(objects, null);
+        return null;
     }
     
     
