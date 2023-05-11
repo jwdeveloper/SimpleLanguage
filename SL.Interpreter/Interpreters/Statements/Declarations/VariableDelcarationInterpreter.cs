@@ -2,7 +2,7 @@ using SL.Parser.Parsing.AST;
 
 namespace SL.Interpreter.Interpreters;
 
-public class VariableStatementInterpreter : IInterpreter<VariableStatement>
+public class VariableDelcarationInterpreter : IInterpreter<VariableStatement>
 {
     public async Task<object> Interpreter(VariableStatement node, ProgramContext program, InterpreterFactory factory)
     {

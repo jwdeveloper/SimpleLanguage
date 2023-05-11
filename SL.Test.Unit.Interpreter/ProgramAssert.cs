@@ -1,27 +1,21 @@
-
 using SL.Interpreter;
+using SL.Interpreter.Interpreters;
 using SL.Parser.Parsing.AST;
 
 namespace SL.Test.Unit.Interpreter;
 
 public class ProgramAssert
 {
-    
-    public static void AssertThrowsProgram<T>(Func<Task> action) where T: Exception
+    public static void AssertThrowsProgram<T>(Func<Task> action) where T : Exception
     {
-        Assert.ThrowsAsync<T>(async () =>
-        {
-            await action.Invoke();
-        });
+        Assert.ThrowsAsync<T>(async () => { await action.Invoke(); });
     }
-    
-    public static void AssertThrowsProgram<T>(Evaluator evaluator, SlProgram slProgram) where T: Exception
+
+    public static void AssertThrowsProgram<T>(Evaluator evaluator, SlProgram slProgram) where T : Exception
     {
-        Assert.ThrowsAsync<T>(async () =>
-        {
-            await evaluator.ExecuteProgram(slProgram);
-        });
+        Assert.ThrowsAsync<T>(async () => { await evaluator.ExecuteProgram(slProgram); });
     }
+
     public static ProgramAssert AssertProgram(Evaluator evaluator)
     {
         return new ProgramAssert(evaluator);
@@ -55,8 +49,8 @@ public class ProgramAssert
         Assert.That(variableValue, Is.EqualTo(value));
         return this;
     }
-    
-    
+
+
     public ProgramAssert HasFunctionsCount(int count)
     {
         Assert.That(_evaluator.ProgramContext.Functions.Count, Is.EqualTo(count));
@@ -76,7 +70,22 @@ public class ProgramAssert
         Assert.That(variableValue.Parameters.Count, Is.EqualTo(parameters));
         return this;
     }
+
+    public ProgramAssert HasClass(string name)
+    {
+        Assert.That(_evaluator.ProgramContext.IsClassExists(name), Is.EqualTo(true));
+        return this;
+    }
     
+    
+    public ProgramAssert HasClass(string name, Action<ProgramClass> programClass)
+    {
+        HasClass(name);
+        var clzz = _evaluator.ProgramContext.GetClassType(name);
+        return this;
+    }
+    
+
     public ProgramAssert HasFunction(string name, string type, int parameters)
     {
         HasFunction(name);
@@ -85,14 +94,14 @@ public class ProgramAssert
         Assert.That(variableValue.Type, Is.EqualTo(type));
         return this;
     }
-    
+
     public ProgramAssert HasConsoleOutput(string output, int index)
     {
         var value = _evaluator.ProgramContext.Console[index];
         Assert.That(value, Is.EqualTo(output));
         return this;
     }
-    
+
     public ProgramAssert HasConsoleOutputCount(int count)
     {
         Assert.That(_evaluator.ProgramContext.Console.Count, Is.EqualTo(count));

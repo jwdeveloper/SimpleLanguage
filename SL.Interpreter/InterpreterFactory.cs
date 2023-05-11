@@ -22,7 +22,7 @@ public class InterpreterFactory
     }
 
 
-    public async Task<object> InterpreterNode<T>(T node) where T : Node
+    public async Task<object> InterpreterNode<T>(T node, ProgramContext programContext = null) where T : Node
     {
         var nodeType = node.GetType();
         object interpreter = _interpreters[nodeType];
@@ -37,10 +37,13 @@ public class InterpreterFactory
             return null;
         }
 
+        if (programContext == null)
+        {
+            programContext = _programContext;
+        }
+        
         _methodInfo = interpreter.GetType().GetMethod("Interpreter");
-        
-        
-        var task = (Task)_methodInfo.Invoke(interpreter, new object[] { node, _programContext, this });
+        var task = (Task)_methodInfo.Invoke(interpreter, new object[] { node, programContext, this });
         await task.ConfigureAwait(false);
         _propertyInfo =  task.GetType().GetProperty("Result");
         return _propertyInfo.GetValue(task);

@@ -3,13 +3,13 @@ using SL.Parser.Common;
 
 namespace SL.Parser.Lexing;
 
-public class Lexer
+public class Tokenizer
 {
     private readonly CharIterator _iterator;
     private readonly Dictionary<string, ITokenHandler> _handlers;
     private readonly HashSet<string> _ignores;
 
-    public Lexer(CharIterator iterator,
+    public Tokenizer(CharIterator iterator,
         Dictionary<string, ITokenHandler> handlers,
         HashSet<string> ignores)
     {

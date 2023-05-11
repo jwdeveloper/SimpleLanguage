@@ -74,7 +74,7 @@ namespace SL.Application
                 {
                     InvokeAction(() => Clear(Output_program));
                     
-                    var lexer = LexerFactory.CreateLexer(input);
+                    var lexer = TokenizerFactory.CreateLexer(input);
                     var tokenIterator = await lexer.LexAllToInterator(_source.Token);
                     InvokeAction(() => DisplayTokens(tokenIterator.ToList()));
                     

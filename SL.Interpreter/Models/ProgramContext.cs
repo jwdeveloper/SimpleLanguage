@@ -8,6 +8,7 @@ public class ProgramContext
     public CancellationToken CANCELLATION_TOKEN;
     public  Dictionary<string, ProgramVariable> Variables {get;}
     public  Dictionary<string, ProgramFunction> Functions { get; }
+    public  Dictionary<string, ProgramClass> Classes { get; }
     public  List<string> Console { get; }
     
     private readonly List<string> _progamTypes;
@@ -21,6 +22,7 @@ public class ProgramContext
         CANCELLATION_TOKEN = cancellationToken;
         Variables = new Dictionary<string, ProgramVariable>();
         Functions = new Dictionary<string, ProgramFunction>();
+        Classes = new Dictionary<string, ProgramClass>();
         Console = new List<string>();
         _progamTypes = new List<string>();
         _variablesStack = new Stack<ProgramVariable>();
@@ -52,7 +54,27 @@ public class ProgramContext
         if (onConsoleUpdate != null)
             onConsoleUpdate.Invoke(Console);
     }
+
+
+    public bool CreateProgramClass(ProgramClass programClass)
+    {
+        if (IsClassExists(programClass.Name))
+        {
+            throw new Exception($"Class type {programClass.Name} already declared");
+        }
+        Classes.Add(programClass.Name, programClass);
+        return true;
+    }
     
+    public ProgramClass GetClassType(string name)
+    {
+        if (!IsClassExists(name))
+        {
+            throw new Exception($"Class type {name} is not declared");
+        }
+
+        return Classes[name];
+    }
     
     public bool CreateFunction(ProgramFunction programFunction)
     {
@@ -103,6 +125,11 @@ public class ProgramContext
         }
         
         return await function.Invoker.Invoke(param, this);
+    }
+    
+    public bool IsClassExists(string className)
+    {
+        return Classes.ContainsKey(className);
     }
     
     public bool IsFunctionExists(string functionName)

@@ -4,9 +4,9 @@ using SL.Parser.Lexing.Handlers;
 
 namespace SL.Parser;
 
-public class LexerFactory
+public class TokenizerFactory
 {
-    public static Lexer CreateLexer(string content)
+    public static Tokenizer CreateLexer(string content)
     {
         var builder = new LexerBuilder();
         builder.WithContent(content);

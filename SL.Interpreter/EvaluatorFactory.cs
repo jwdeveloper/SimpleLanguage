@@ -22,17 +22,19 @@ public class EvaluatorFactory
             })
             //Statements
             .WithInterpreter<Statement, StatementInterpreter>()
-            .WithInterpreter<VariableStatement, VariableStatementInterpreter>()
+            .WithInterpreter<VariableStatement, VariableDelcarationInterpreter>()
             .WithInterpreter<IfBlockStatement, IfBlockInterpreter>()
             .WithInterpreter<WhileBlockStatement, WhileBlockInterpeter>()
             .WithInterpreter<ForStatement, ForBlockInterpreter>()
             .WithInterpreter<ForeachStatement,ForeachBlockInterpreter>()
-            .WithInterpreter<FunctionDeclarationStatement, FunctionStatementInterpreter>()
+            .WithInterpreter<FunctionDeclarationStatement, FunctionDelcarationInterpreter>()
             .WithInterpreter<BlockStatement,BlockInterpreter>()
             .WithInterpreter<EmptyBlockStatement>((_, _, _) => Task.FromResult<object>(true))
             .WithInterpreter<ExpresionStatement, ExpresionStatementInterpreter>()
             .WithInterpreter<ReturnStatement, ReturnInterpreter>()
             .WithInterpreter<BreakStatement,BreakInterpreter>()
+            .WithInterpreter<ClassDeclarationStatement, ClassDelcarationInterpreter>()
+            .WithInterpreter<ClassInitializeExpressionStatement, ClassInitializeInterpreter>()
             
             //Expressions
             .WithInterpreter<FunctionCallExpression, FunctionCallExpressionInterpreter>()

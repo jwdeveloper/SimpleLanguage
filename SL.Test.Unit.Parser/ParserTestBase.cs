@@ -16,8 +16,8 @@ public class ParserTestBase
 
    
 
-    protected  Lexer CreateLexer(string content)
+    protected  Tokenizer CreateLexer(string content)
     {
-        return LexerFactory.CreateLexer(content);
+        return TokenizerFactory.CreateLexer(content);
     }
 }

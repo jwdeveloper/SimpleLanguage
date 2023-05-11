@@ -66,11 +66,11 @@ public class LexerBuilder
         return this;
     }
     
-    public Lexer Build()
+    public Tokenizer Build()
     {
         var position = new Position();
         var target = _content.ToCharArray();
         var iterator = new CharIterator(target, position);
-        return new Lexer(iterator, _handlers,_ignores);
+        return new Tokenizer(iterator, _handlers,_ignores);
     }
 }

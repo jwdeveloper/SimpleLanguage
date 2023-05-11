@@ -2,7 +2,7 @@ using SL.Parser.Parsing.AST;
 
 namespace SL.Interpreter.Interpreters;
 
-public class FunctionStatementInterpreter : IInterpreter<FunctionDeclarationStatement>
+public class FunctionDelcarationInterpreter : IInterpreter<FunctionDeclarationStatement>
 {
     public async Task<object> Interpreter(FunctionDeclarationStatement node, 
         ProgramContext program,
@@ -13,7 +13,12 @@ public class FunctionStatementInterpreter : IInterpreter<FunctionDeclarationStat
         functionModel.Type = node.HasFunctionType ? node.FunctionType?.IdentifierName : "var";
         functionModel.Parameters = new string[node.ParameterStatements.Count()];
         functionModel.Invoker = async (input, _program) => await HandleFunctionCall(input, _program, node, factory);
-        return program.CreateFunction(functionModel);
+        if (!program.CreateFunction(functionModel))
+        {
+            throw new Exception($"Unable to create function {node.FunctionName}");  
+        }
+        
+        return functionModel;
     }
 
 
