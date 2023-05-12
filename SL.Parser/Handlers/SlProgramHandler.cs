@@ -1,8 +1,8 @@
-using SL.Parser.Api;
-using SL.Parser.Common;
-using SL.Parser.Parsing.AST;
+using SL.Parser.Models;
+using SL.Tokenizer.Interfaces;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Parsing.Handlers;
+namespace SL.Parser.Handlers;
 
 public class SlProgramHandler : IParserHandler<SlProgram>
 {

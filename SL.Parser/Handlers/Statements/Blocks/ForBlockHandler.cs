@@ -1,10 +1,11 @@
-using SL.Parser.Api;
-using SL.Parser.Api.Exceptions;
-using SL.Parser.Common;
-using SL.Parser.Parsing.AST;
-using SL.Parser.Parsing.AST.Statements;
+using SL.Parser.Models;
+using SL.Parser.Models.Statements;
+using SL.Parser.Models.Statements.Blocks;
+using SL.Tokenizer.Exceptions;
+using SL.Tokenizer.Interfaces;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Parsing.Handlers.Statements.Blocks;
+namespace SL.Parser.Handlers.Statements.Blocks;
 
 public class ForBlockHandler : IParserHandler<ForLoopStatement>
 {

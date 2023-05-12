@@ -1,8 +1,6 @@
 using System.Dynamic;
-using SL.Parser.Parsing.AST.Expressions;
-using SL.Parser.Parsing.AST.Statements;
 
-namespace SL.Parser.Parsing.AST;
+namespace SL.Parser.Models.Statements.Blocks;
 
 public class ForeachStatement: ForLoopStatement
 {

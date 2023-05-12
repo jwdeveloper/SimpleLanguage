@@ -1,7 +1,6 @@
 using System.Dynamic;
-using SL.Parser.Parsing.AST.Expressions;
 
-namespace SL.Parser.Parsing.AST;
+namespace SL.Parser.Models.Statements;
 
 public class WhileBlockStatement : Statement
 {

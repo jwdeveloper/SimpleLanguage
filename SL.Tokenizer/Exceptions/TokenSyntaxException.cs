@@ -1,6 +1,6 @@
-using SL.Parser.Common;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Api.Exceptions;
+namespace SL.Tokenizer.Exceptions;
 
 public class BadTokenException : Exception
 {

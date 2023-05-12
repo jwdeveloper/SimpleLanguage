@@ -1,4 +1,4 @@
-namespace SL.Parser.Parsing.AST.Expressions;
+namespace SL.Parser.Models.Statements;
 
 public class ExpresionStatement : Statement
 {

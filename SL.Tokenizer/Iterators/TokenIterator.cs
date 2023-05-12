@@ -1,8 +1,8 @@
-using SL.Parser.Api;
-using SL.Parser.Api.Exceptions;
-using SL.Parser.Common;
+using SL.Tokenizer.Exceptions;
+using SL.Tokenizer.Interfaces;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Lexing;
+namespace SL.Tokenizer.Iterators;
 
 public class TokenIterator : AbstractIterator<Token>, ITokenIterator
 {

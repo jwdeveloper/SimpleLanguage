@@ -1,6 +1,6 @@
 using System.Dynamic;
 
-namespace SL.Parser.Parsing.AST.Expressions;
+namespace SL.Parser.Models;
 
 public abstract class Literal : Expression
 {

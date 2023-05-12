@@ -1,8 +1,9 @@
-using SL.Parser.Api;
-using SL.Parser.Parsing.AST;
-using SL.Parser.Parsing.AST.Expressions;
+using SL.Parser.Models;
+using SL.Parser.Models.Statements;
+using SL.Parser.Models.Statements.Blocks;
+using SL.Tokenizer.Interfaces;
 
-namespace SL.Parser.Parsing.Handlers.Statements.Blocks;
+namespace SL.Parser.Handlers.Statements.Blocks;
 
 public class IfBlockHandler : IParserHandler<IfBlockStatement>
 {

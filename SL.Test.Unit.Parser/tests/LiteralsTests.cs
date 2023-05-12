@@ -1,7 +1,8 @@
-using SL.Parser.Parsing.AST;
-using SL.Parser.Parsing.AST.Expressions;
+using SL.Parser.Models;
+using SL.Parser.Models.Literals;
+using SL.Parser.Models.Statements;
 
-namespace SL.Test.Unit.Parser;
+namespace SL.Test.Unit.Parser.tests;
 
 public class LiteralsTests : ParserTestBase
 {

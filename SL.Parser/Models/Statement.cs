@@ -1,6 +1,6 @@
-namespace SL.Parser.Parsing.AST;
+namespace SL.Parser.Models;
 
-public class Statement : Node
+public abstract class Statement : Node
 {
 
 }

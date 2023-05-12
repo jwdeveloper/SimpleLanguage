@@ -1,4 +1,4 @@
-namespace SL.Parser.Api;
+namespace SL.Tokenizer.Interfaces;
 
 public interface IPosition
 {

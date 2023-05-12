@@ -1,9 +1,16 @@
 using System.Text;
-using SL.Parser.Parsing.AST;
-using SL.Parser.Parsing.AST.Expressions;
 using SL.Interpreter.Interpreters;
 using SL.Interpreter.Interpreters.Expressions;
-using SL.Parser.Parsing.AST.Statements;
+using SL.Interpreter.Interpreters.Statements;
+using SL.Interpreter.Interpreters.Statements.Blocks;
+using SL.Interpreter.Interpreters.Statements.Declarations;
+using SL.Interpreter.Models;
+using SL.Parser.Models;
+using SL.Parser.Models.Expressions;
+using SL.Parser.Models.Literals;
+using SL.Parser.Models.Statements;
+using SL.Parser.Models.Statements.Blocks;
+using SL.Parser.Models.Statements.Declarations;
 
 namespace SL.Interpreter;
 

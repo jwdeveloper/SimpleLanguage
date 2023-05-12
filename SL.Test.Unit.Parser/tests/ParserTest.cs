@@ -1,8 +1,6 @@
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using SL.Parser.Parsing.AST;
+using SL.Parser.Models;
 
-namespace SL.Test.Unit.Parser;
+namespace SL.Test.Unit.Parser.tests;
 
 public class ParserTest : ParserTestBase
 {

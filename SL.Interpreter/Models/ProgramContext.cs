@@ -1,6 +1,4 @@
-using SL.Interpreter.Interpreters;
-
-namespace SL.Interpreter;
+namespace SL.Interpreter.Models;
 
 public class ProgramContext
 {

@@ -1,9 +1,9 @@
-using SL.Parser.Api;
-using SL.Parser.Api.Exceptions;
-using SL.Parser.Common;
-using SL.Parser.Parsing.AST;
+using SL.Parser.Models;
+using SL.Tokenizer.Exceptions;
+using SL.Tokenizer.Interfaces;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Parsing.Handlers.Statements;
+namespace SL.Parser.Handlers.Statements;
 
 public class StatementListHandler : IParserHandler<List<Statement>>
 {

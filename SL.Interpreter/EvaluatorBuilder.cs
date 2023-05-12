@@ -1,5 +1,6 @@
-using SL.Parser.Parsing.AST;
 using SL.Interpreter.Interpreters;
+using SL.Interpreter.Models;
+using SL.Parser.Models;
 
 namespace SL.Interpreter;
 

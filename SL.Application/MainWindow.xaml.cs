@@ -8,9 +8,9 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using SL.Parser;
-using SL.Parser.Api;
-using SL.Parser.Common;
 using SL.Interpreter;
+using SL.Tokenizer;
+using SL.Tokenizer.Models;
 
 namespace SL.Application
 {
@@ -74,7 +74,7 @@ namespace SL.Application
                 {
                     InvokeAction(() => Clear(Output_program));
                     
-                    var lexer = TokenizerFactory.CreateLexer(input);
+                    var lexer = TokenizerFactory.CreateTokenizer(input);
                     var tokenIterator = await lexer.LexAllToInterator(_source.Token);
                     InvokeAction(() => DisplayTokens(tokenIterator.ToList()));
                     

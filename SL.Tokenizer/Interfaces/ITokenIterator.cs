@@ -1,6 +1,6 @@
-using SL.Parser.Common;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Api;
+namespace SL.Tokenizer.Interfaces;
 
 public interface ITokenIterator
 {

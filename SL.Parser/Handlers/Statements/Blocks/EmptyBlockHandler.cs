@@ -1,8 +1,8 @@
-using SL.Parser.Api;
-using SL.Parser.Common;
-using SL.Parser.Parsing.AST;
+using SL.Parser.Models.Statements;
+using SL.Tokenizer.Interfaces;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Parsing.Handlers.Statements.Blocks;
+namespace SL.Parser.Handlers.Statements.Blocks;
 
 public class EmptyBlockHandler : IParserHandler<EmptyBlockStatement>
 {

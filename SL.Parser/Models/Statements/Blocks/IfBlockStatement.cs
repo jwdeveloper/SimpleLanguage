@@ -1,6 +1,6 @@
 using System.Dynamic;
 
-namespace SL.Parser.Parsing.AST;
+namespace SL.Parser.Models.Statements.Blocks;
 
 public class IfBlockStatement : Statement
 {

@@ -1,6 +1,7 @@
-using SL.Parser.Parsing.AST;
+using SL.Interpreter.Models;
+using SL.Parser.Models.Statements.Blocks;
 
-namespace SL.Interpreter.Interpreters;
+namespace SL.Interpreter.Interpreters.Statements.Blocks;
 
 public class IfBlockInterpreter : IInterpreter<IfBlockStatement>
 {

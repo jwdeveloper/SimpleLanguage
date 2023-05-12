@@ -1,6 +1,6 @@
 
 
-using SL.Parser.Api.Exceptions;
+using SL.Tokenizer.Exceptions;
 
 namespace SL.Test.Unit.Interpreter.tests;
 

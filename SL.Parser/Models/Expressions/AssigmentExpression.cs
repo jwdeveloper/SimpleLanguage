@@ -1,6 +1,6 @@
-using SL.Parser.Common;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Parsing.AST.Expressions;
+namespace SL.Parser.Models.Expressions;
 
 public class AssigmentExpression : BinaryExpression
 {

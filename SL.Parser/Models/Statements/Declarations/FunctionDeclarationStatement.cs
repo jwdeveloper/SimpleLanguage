@@ -1,8 +1,8 @@
 using System.Dynamic;
-using SL.Parser.Common;
-using SL.Parser.Parsing.AST.Expressions;
+using SL.Parser.Models.Literals;
+using SL.Parser.Models.Statements.Blocks;
 
-namespace SL.Parser.Parsing.AST;
+namespace SL.Parser.Models.Statements.Declarations;
 
 public class FunctionDeclarationStatement : Statement
 {

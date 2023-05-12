@@ -1,22 +1,15 @@
 using System.Dynamic;
-using SL.Parser.Common;
-using SL.Parser.Parsing.AST.Expressions;
+using SL.Parser.Models.Literals;
+using SL.Parser.Models.Statements.Declarations;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Parsing.AST;
+namespace SL.Parser.Models.Statements;
 
 public class VariableStatement : Statement
 {
     private readonly Token _variableTypeToken;
     public List<VariableDeclarationStatement> VariableDeclarations { get; }
     public string VariableType => _variableTypeToken.Value;
-    
-    
-    //TODO Remove 
-    public VariableStatement(Token variableTypeToken, List<VariableDeclarationStatement> variableDeclarations)
-    {
-        _variableTypeToken = variableTypeToken;
-        VariableDeclarations = variableDeclarations;
-    }
     
     public VariableStatement(IdentifierLiteral variableTypeToken, List<VariableDeclarationStatement> variableDeclarations)
     {

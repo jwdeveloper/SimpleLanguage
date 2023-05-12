@@ -1,4 +1,4 @@
-namespace SL.Parser.Parsing.AST.Statements;
+namespace SL.Parser.Models.Statements;
 
 public class BreakStatement : Statement
 {

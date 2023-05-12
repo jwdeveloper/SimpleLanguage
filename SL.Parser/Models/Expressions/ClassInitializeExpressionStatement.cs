@@ -1,6 +1,6 @@
 using System.Dynamic;
 
-namespace SL.Parser.Parsing.AST.Expressions;
+namespace SL.Parser.Models.Expressions;
 
 public class ClassInitializeExpressionStatement : Expression
 {

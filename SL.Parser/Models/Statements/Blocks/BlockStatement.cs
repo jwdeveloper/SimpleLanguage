@@ -1,4 +1,4 @@
-namespace SL.Parser.Parsing.AST;
+namespace SL.Parser.Models.Statements.Blocks;
 
 public class BlockStatement : Statement
 {

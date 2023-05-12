@@ -1,12 +1,11 @@
-using SL.Parser.Common;
-using SL.Parser.Lexing;
-using SL.Parser.Lexing.Handlers;
+using SL.Tokenizer.Handlers;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser;
+namespace SL.Tokenizer;
 
 public class TokenizerFactory
 {
-    public static Tokenizer CreateLexer(string content)
+    public static Tokenizer CreateTokenizer(string content)
     {
         var builder = new LexerBuilder();
         builder.WithContent(content);

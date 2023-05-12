@@ -1,7 +1,6 @@
-using SL.Parser.Api;
-using SL.Parser.Parsing.AST;
+using SL.Tokenizer.Interfaces;
 
-namespace SL.Parser.Parsing;
+namespace SL.Parser.Handlers;
 
 public interface IParserHandler<T>
 {

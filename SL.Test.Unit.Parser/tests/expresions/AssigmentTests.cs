@@ -1,8 +1,10 @@
-using SL.Parser.Api.Exceptions;
-using SL.Parser.Parsing.AST;
-using SL.Parser.Parsing.AST.Expressions;
+using SL.Parser.Models;
+using SL.Parser.Models.Expressions;
+using SL.Parser.Models.Literals;
+using SL.Parser.Models.Statements;
+using SL.Tokenizer.Exceptions;
 
-namespace SL.Test.Unit.Parser.expresions;
+namespace SL.Test.Unit.Parser.tests.expresions;
 
 public class AssigmentTests : ParserTestBase
 {

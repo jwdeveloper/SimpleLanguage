@@ -1,6 +1,6 @@
 using System.Dynamic;
 
-namespace SL.Parser.Parsing.AST.Statements;
+namespace SL.Parser.Models.Statements;
 
 public class ReturnStatement : Statement
 {

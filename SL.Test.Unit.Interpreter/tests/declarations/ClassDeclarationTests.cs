@@ -1,4 +1,4 @@
-namespace SL.Test.Unit.Interpreter.tests;
+namespace SL.Test.Unit.Interpreter.tests.declarations;
 
 public class ClassDeclarationTests : InterpreterTestBase
 {

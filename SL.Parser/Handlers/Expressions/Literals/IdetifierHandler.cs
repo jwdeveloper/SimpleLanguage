@@ -1,9 +1,10 @@
-using SL.Parser.Api;
-using SL.Parser.Api.Exceptions;
-using SL.Parser.Common;
-using SL.Parser.Parsing.AST.Expressions;
+using SL.Parser.Models.Expressions;
+using SL.Parser.Models.Literals;
+using SL.Tokenizer.Exceptions;
+using SL.Tokenizer.Interfaces;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Parsing.Handlers.Expressions.Literals;
+namespace SL.Parser.Handlers.Expressions.Literals;
 
 public class IdetifierHandler : IParserHandler<IdentifierLiteral>
 {

@@ -1,7 +1,9 @@
-using SL.Parser.Api;
-using SL.Parser.Common;
+using SL.Tokenizer.Handlers;
+using SL.Tokenizer.Interfaces;
+using SL.Tokenizer.Iterators;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Lexing;
+namespace SL.Tokenizer;
 
 public class LexerBuilder
 {

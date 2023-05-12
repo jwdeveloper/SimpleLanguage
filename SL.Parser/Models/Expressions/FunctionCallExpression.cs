@@ -1,6 +1,7 @@
 using System.Dynamic;
+using SL.Parser.Models.Literals;
 
-namespace SL.Parser.Parsing.AST.Expressions;
+namespace SL.Parser.Models.Expressions;
 
 public class FunctionCallExpression : IdentifierLiteral
 {
@@ -14,8 +15,8 @@ public class FunctionCallExpression : IdentifierLiteral
         List<Expression> paramteters,
         IdentifierLiteral nextCall = null) : base(functionNameLiteral.IdentifierName, nextCall)
     {
-        this.FunctionNameLiteral = functionNameLiteral;
-        this.Paramteters = paramteters;
+       FunctionNameLiteral = functionNameLiteral;
+       Paramteters = paramteters;
     }
 
 

@@ -1,4 +1,4 @@
-namespace SL.Parser.Api.Exceptions;
+namespace SL.Tokenizer.Exceptions;
 
 public class EndOfParsingException : Exception
 {

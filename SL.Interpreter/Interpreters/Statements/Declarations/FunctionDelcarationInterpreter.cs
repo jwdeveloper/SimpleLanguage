@@ -1,6 +1,7 @@
-using SL.Parser.Parsing.AST;
+using SL.Interpreter.Models;
+using SL.Parser.Models.Statements.Declarations;
 
-namespace SL.Interpreter.Interpreters;
+namespace SL.Interpreter.Interpreters.Statements.Declarations;
 
 public class FunctionDelcarationInterpreter : IInterpreter<FunctionDeclarationStatement>
 {

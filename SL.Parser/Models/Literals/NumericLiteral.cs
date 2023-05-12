@@ -1,4 +1,4 @@
-namespace SL.Parser.Parsing.AST.Expressions;
+namespace SL.Parser.Models.Literals;
 
 public class NumericLiteral : Literal
 {

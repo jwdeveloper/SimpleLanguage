@@ -1,6 +1,6 @@
-using SL.Parser.Api;
+using SL.Tokenizer.Interfaces;
 
-namespace SL.Parser.Common;
+namespace SL.Tokenizer.Models;
 
 public record Token(TokenType Type, string Value, IPosition Position)
 {

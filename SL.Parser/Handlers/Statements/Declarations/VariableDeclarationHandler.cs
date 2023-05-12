@@ -1,10 +1,11 @@
-using SL.Parser.Api;
-using SL.Parser.Common;
-using SL.Parser.Parsing.AST;
-using SL.Parser.Parsing.AST.Expressions;
-using SL.Parser.Parsing.Handlers.Expressions;
+using SL.Parser.Handlers.Expressions;
+using SL.Parser.Models;
+using SL.Parser.Models.Literals;
+using SL.Parser.Models.Statements.Declarations;
+using SL.Tokenizer.Interfaces;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Parsing.Handlers.Statements.Declarations;
+namespace SL.Parser.Handlers.Statements.Declarations;
 
 public class VariableDeclarationHandler : IParserHandler<VariableDeclarationStatement>
 {

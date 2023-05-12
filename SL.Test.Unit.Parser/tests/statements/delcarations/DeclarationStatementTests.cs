@@ -1,7 +1,6 @@
-using SL.Parser.Parsing.AST;
-using SL.Parser.Parsing.AST.Expressions;
+using SL.Parser.Models;
 
-namespace SL.Test.Unit.Parser;
+namespace SL.Test.Unit.Parser.tests.statements.delcarations;
 
 public class DeclarationStatement : ParserTestBase
 {

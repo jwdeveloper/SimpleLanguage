@@ -1,8 +1,8 @@
 using System.Text;
-using SL.Parser.Api;
-using SL.Parser.Common;
+using SL.Tokenizer.Interfaces;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Lexing.Handlers;
+namespace SL.Tokenizer.Handlers;
 
 public class NumberHandler : ITokenHandler
 {

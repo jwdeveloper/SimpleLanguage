@@ -1,8 +1,8 @@
 using System.Reflection;
-using SL.Parser.Parsing.AST;
-using SL.Parser.Parsing.AST.Expressions;
 using SL.Interpreter.Interpreters;
 using SL.Interpreter.Interpreters.Expressions;
+using SL.Interpreter.Models;
+using SL.Parser.Models;
 
 namespace SL.Interpreter;
 

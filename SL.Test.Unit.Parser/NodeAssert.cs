@@ -1,4 +1,4 @@
-using SL.Parser.Parsing.AST;
+using SL.Parser.Models;
 
 namespace SL.Test.Unit.Parser;
 

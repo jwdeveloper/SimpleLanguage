@@ -1,7 +1,7 @@
-using SL.Parser.Api;
-using SL.Parser.Common;
+using SL.Tokenizer.Interfaces;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Lexing;
+namespace SL.Tokenizer.Iterators;
 
 public class CharIterator : IIterator<char>
 {

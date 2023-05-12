@@ -1,9 +1,6 @@
-using SL.Parser.Api;
-using SL.Parser.Lexing;
-using SL.Parser.Parsing.AST;
+using SL.Tokenizer.Interfaces;
 
-
-namespace SL.Parser.Parsing;
+namespace SL.Parser;
 
 public class ParserBuilder
 {

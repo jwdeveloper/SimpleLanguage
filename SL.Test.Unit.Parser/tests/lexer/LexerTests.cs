@@ -1,9 +1,4 @@
-using System.Text.RegularExpressions;
-using SL.Parser.Common;
-using SL.Parser.Lexing;
-using SL.Parser.Lexing.Handlers;
-
-namespace SL.Test.Unit.Parser;
+namespace SL.Test.Unit.Parser.tests.lexer;
 
 public class LexerTests : ParserTestBase
 {

@@ -1,4 +1,4 @@
-namespace SL.Parser.Common;
+namespace SL.Tokenizer.Iterators;
 
 public class AbstractIterator<T>
 {

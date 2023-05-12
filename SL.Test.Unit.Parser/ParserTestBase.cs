@@ -1,6 +1,6 @@
 using SL.Parser;
-using SL.Parser.Lexing;
-using SL.Parser.Parsing.AST;
+using SL.Parser.Models;
+using SL.Tokenizer;
 
 namespace SL.Test.Unit.Parser;
 
@@ -16,8 +16,8 @@ public class ParserTestBase
 
    
 
-    protected  Tokenizer CreateLexer(string content)
+    protected  Tokenizer.Tokenizer CreateLexer(string content)
     {
-        return TokenizerFactory.CreateLexer(content);
+        return TokenizerFactory.CreateTokenizer(content);
     }
 }

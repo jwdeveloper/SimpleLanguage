@@ -1,4 +1,4 @@
-namespace SL.Interpreter.Interpreters;
+namespace SL.Interpreter.Models;
 
 public class ProgramObject
 {

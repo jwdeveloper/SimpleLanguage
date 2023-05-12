@@ -1,7 +1,7 @@
 using System.Dynamic;
-using SL.Parser.Parsing.AST.Expressions;
+using SL.Parser.Models.Literals;
 
-namespace SL.Parser.Parsing.AST;
+namespace SL.Parser.Models.Statements.Declarations;
 
 public class VariableDeclarationStatement : Statement
 {

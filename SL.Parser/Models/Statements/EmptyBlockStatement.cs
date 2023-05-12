@@ -1,6 +1,6 @@
 using System.Dynamic;
 
-namespace SL.Parser.Parsing.AST;
+namespace SL.Parser.Models.Statements;
 
 public class EmptyBlockStatement : Statement
 {

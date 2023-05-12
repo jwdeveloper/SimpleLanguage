@@ -1,7 +1,6 @@
 using System.Dynamic;
-using System.Text.Json.Serialization;
 
-namespace SL.Parser.Parsing.AST;
+namespace SL.Parser.Models;
 
 public abstract class Node
 {

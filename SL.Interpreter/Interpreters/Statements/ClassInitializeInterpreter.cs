@@ -1,6 +1,7 @@
-using SL.Parser.Parsing.AST.Expressions;
+using SL.Interpreter.Models;
+using SL.Parser.Models.Expressions;
 
-namespace SL.Interpreter.Interpreters;
+namespace SL.Interpreter.Interpreters.Statements;
 
 public class ClassInitializeInterpreter : IInterpreter<ClassInitializeExpressionStatement>
 {

@@ -1,7 +1,8 @@
-using SL.Parser.Api;
-using SL.Parser.Common;
+using SL.Tokenizer.Interfaces;
+using SL.Tokenizer.Iterators;
+using SL.Tokenizer.Models;
 
-namespace SL.Parser.Lexing;
+namespace SL.Tokenizer;
 
 public class Tokenizer
 {
@@ -85,6 +86,14 @@ public class Tokenizer
             var one = tokens[i - 1];
             var two = tokens[i];
 
+
+            if (one.Value == string.Empty || two.Value == string.Empty)
+            {
+                cleared.Add(one);
+                continue;
+            }
+            
+            
             var value = one.Value + two.Value;
             if (_handlers.ContainsKey(value))
             {
@@ -94,10 +103,8 @@ public class Tokenizer
                 i += 1;
                 continue;
             }
-            else
-            {
-                cleared.Add(one);
-            }
+            
+            cleared.Add(one);
         }
 
 
